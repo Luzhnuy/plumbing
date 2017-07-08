@@ -466,7 +466,11 @@ span.logo-test{
 .contacts-list a{
 	font-size: 16px;
 	color: #fff;
-	font-weight: bold;;
+	font-weight: bold;
+}
+
+.contacts-list a:hover{
+	text-decoration: none;
 }
 
 .contacts-list .contacts-li.li-fb{
@@ -487,6 +491,11 @@ span.logo-test{
 
 .contacts-list .contacts-li.li-instagram{
 	background-color: #3A5874;
+}
+
+.contacts-list .contacts-li:hover{
+	cursor: pointer; 
+    background-color: #464646 !important;
 }
 
 footer {
