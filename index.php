@@ -338,7 +338,10 @@ foreach ($basket as $b) {
 				      <div class="item active">
 				        <div class="row">
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
-				        	<?php if ($brands[0]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
+				        		<div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
+				        		<a href="#!"><img class="c-image" src="src/brands_images/kaldewei.png" alt="" data-id="" class="do-search-brand"></a>
+				        	</div>
+				        	<!-- <?php if ($brands[0]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
 				        		<a href="bsearch.php?search=<?=$brands[0]['id'];?>"><img class="c-image" src="<?=$brands[0]['image'];?>" alt="<?=$brands[0]['name'];?>" data-id="<?=$brands[0]['id'];?>" class="do-search-brand"></a><?php endif; ?>
 				        	</div>
 				        	<?php if ($brands[1]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
@@ -352,7 +355,8 @@ foreach ($basket as $b) {
 				        	</div>
 				        	<?php if ($brands[4]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
 				        		<a href="bsearch.php?search=<?=$brands[4]['id'];?>"><img class="c-image" src="<?=$brands[4]['image'];?>" alt="<?=$brands[4]['name'];?>" data-id="<?=$brands[4]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        	</div> -->
+
 				        	<!-- <div class="col-xs-12 col-sm-2 col-md-2 vert-align-center">
 				        		<img src="src/img/cersanit.png" alt="cersanit">
 				        	</div> -->
@@ -365,7 +369,8 @@ foreach ($basket as $b) {
 				        	<!-- <div class="col-xs-12 col-sm-2 vert-align-center">
 				        		<img src="src/img/wavin.png" alt="wavin">
 				        	</div> -->
-				        	<?php if ($brands[5]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
+
+				        	<!-- <?php if ($brands[5]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
 				        		<a href="bsearch.php?search=<?=$brands[5]['id'];?>"><img class="c-image" src="<?=$brands[5]['image'];?>" alt="<?=$brands[5]['name'];?>" data-id="<?=$brands[5]['id'];?>" class="do-search-brand"></a><?php endif; ?>
 				        	</div>
 				        	<?php if ($brands[6]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
@@ -379,7 +384,7 @@ foreach ($basket as $b) {
 				        	</div>
 				        	<?php if ($brands[9]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
 				        		<a href="bsearch.php?search=<?=$brands[9]['id'];?>"><img class="c-image" src="<?=$brands[9]['image'];?>" alt="<?=$brands[9]['name'];?>" data-id="<?=$brands[9]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        	</div> -->
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
 				        </div>
 				      </div>
