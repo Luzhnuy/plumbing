@@ -256,10 +256,10 @@ span.logo-test{
 	margin-right: 10px;
 }
 
-.btn-reviews{
+.btn-reviews, .btn-add-basket-goods{
 	background-color: #fff;
 }
-.btn-reviews:hover, .btn-add-center:hover{
+.btn-reviews:hover, .btn-add-basket-goods:hover{
 	background-color: #dedefe !important;
 	color: #000 !important;
 	border-radius: 0;
@@ -355,11 +355,11 @@ span.logo-test{
 .ware-text p{
 	font-size: 14px;
 }
-.btn-add-center, .btn-reviews{
+.btn-add-center, .btn-reviews, .btn-add-basket{
 	text-align: center;
 }
 
-.btn-add-basket img, .btn-reviews img{
+.btn-add-basket img, .btn-add-basket-goods img, .btn-reviews img{
 	margin-right: 10px;
 }
 .btn-search-sb{
@@ -693,7 +693,7 @@ font-family: Russia-Light, sans-serif;
 	padding: 0;
 }
 
-.goods-section .goods-add-basket .btn-add-center, .btn-reviews{
+.goods-section .goods-add-basket .btn-add-basket-goods, .btn-reviews{
 	background-color: #fff;
 	border: none;
 	font-size: 20px;
