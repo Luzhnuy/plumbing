@@ -19,6 +19,7 @@
 			$usd_rate = intval($usd[0]->rate);
 			$eur_rate = intval($eur[0]->rate);
 			$discount = strval($_SESSION['discount']);
+									
 			if (strlen($discount) == 1) {
 				$discount = "0.0".$discount;
 			} elseif (strlen($discount) == 2) {
@@ -39,7 +40,20 @@
 					}
 				}
 			}
-			$vars = [$countg, $summ];
+			if ($discount == 0.00) {
+				$vars = [$countg, $summ];
+			} else {
+				$cgcost = $_POST["goods"];
+				$ccurrency = R::getCell("SELECT currency FROM goods WHERE id = ?", [ $cgcost ]);
+				$cgcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $cgcost ]);
+				if ( $ccurrency == 0 ) {
+					$cgcost = $cgcost * $usd_rate;
+				} elseif ( $ccurrency == 1 ) {
+					$cgcost = $cgcost * $eur_rate;
+				}
+				$cgcost = $cgcost * $discount;
+				$vars = [$countg, $summ, intval($cgcost)];
+			}
 			echo json_encode($vars);
 		} else {
 			echo json_encode("nologon");

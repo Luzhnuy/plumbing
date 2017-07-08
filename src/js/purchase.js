@@ -11,14 +11,18 @@ $(".btn-add-center").on("click", function(){
 			$("body").append(text);
 		},
 		success: function(data){
+			data = JSON.parse(data);
 			function remove(){
 				$("#error-info").remove();
 			}
 			remove();
-			var text = '<div id="error-info"> Додано </div>';
+			if (data[2] === null) {
+				var text = '<div id="error-info"> Додано </div>';
+			} else {
+				var text = '<div id="error-info"> Додано | Знижка:'+data[2]+'грн </div>';
+			}
 			$("body").append(text);
 			setTimeout(remove, 2000);
-			data = JSON.parse(data);
 			if (data == "nologon") {
 				$("#ModalSignin").modal('show');
 			} else {
