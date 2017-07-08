@@ -23,17 +23,28 @@ $brandname = R::getCell("SELECT name FROM brands WHERE id = ".$brand);
 $goods = R::getAll("SELECT * FROM goods WHERE brand = ".$brand." AND cost > ".$from." AND cost < ".$to);
 $random_image = unserialize($random_goods['images']); 
 $random_image = $random_image[0]; 
-
+$discount = strval($_SESSION['discount']);
+if (strlen($discount) == 1) {
+	$discount = "0.0".$discount;
+} elseif (strlen($discount) == 2) {
+	$discount = "0.".$discount;
+}
+$discount = floatval($discount);
 foreach ($basket as $b) {
 	if ($_SESSION['id'] == $b['client']) {
 		$countg = $countg + 1;
 		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
-			$summ = $summ + R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
+			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
+			$gcost = $gcost - ( $gcost * $discount );
+			$summ = $summ + ceil($gcost);
 		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
-			$summ = $summ + R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
+			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
+			$gcost = $gcost - ( $gcost * $discount );
+			$summ = $summ + ceil($gcost);
 		}
 	}
-}?>
+}
+?>
 
 <!DOCTYPE html> 
 <html>
@@ -306,26 +317,27 @@ foreach ($basket as $b) {
 				        <div class="row">
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
 				        	<?php if ($brands[0]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[0]['id'];?>"><img class="c-image" src="<?=$brands[0]['image'];?>" alt="<?=$brands[0]['name'];?>" data-id="<?=$brands[0]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[0]['id'];?>"><img class="c-image" src="<?=$brands[0]['image'];?>" alt="<?=$brands[0]['name'];?>" data-id="<?=$brands[0]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[1]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[1]['id'];?>"><img class="c-image" src="<?=$brands[1]['image'];?>" alt="<?=$brands[1]['name'];?>" data-id="<?=$brands[1]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[1]['id'];?>"><img class="c-image" src="<?=$brands[1]['image'];?>" alt="<?=$brands[1]['name'];?>" data-id="<?=$brands[1]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[2]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[2]['id'];?>"><img class="c-image" src="<?=$brands[2]['image'];?>" alt="<?=$brands[2]['name'];?>" data-id="<?=$brands[2]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[2]['id'];?>"><img class="c-image" src="<?=$brands[2]['image'];?>" alt="<?=$brands[2]['name'];?>" data-id="<?=$brands[2]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[3]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 col-md-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[3]['id'];?>"><img class="c-image" src="<?=$brands[3]['image'];?>" alt="<?=$brands[3]['name'];?>" data-id="<?=$brands[3]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[3]['id'];?>"><img class="c-image" src="<?=$brands[3]['image'];?>" alt="<?=$brands[3]['name'];?>" data-id="<?=$brands[3]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[4]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[4]['id'];?>"><img class="c-image" src="<?=$brands[4]['image'];?>" alt="<?=$brands[4]['name'];?>" data-id="<?=$brands[4]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[4]['id'];?>"><img class="c-image" src="<?=$brands[4]['image'];?>" alt="<?=$brands[4]['name'];?>" data-id="<?=$brands[4]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<!-- <div class="col-xs-12 col-sm-2 col-md-2 vert-align-center">
 				        		<img src="src/img/cersanit.png" alt="cersanit">
 				        	</div> -->
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
 				        </div>
 				      </div>
+				      <?php if ($brands[5]['name'] != NULL): ?>
 				      <div class="item">
 				        <div class="row">
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
@@ -333,20 +345,20 @@ foreach ($basket as $b) {
 				        		<img src="src/img/wavin.png" alt="wavin">
 				        	</div> -->
 				        	<?php if ($brands[5]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[5]['id'];?>"><img class="c-image" src="<?=$brands[5]['image'];?>" alt="<?=$brands[5]['name'];?>" data-id="<?=$brands[5]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[5]['id'];?>"><img class="c-image" src="<?=$brands[5]['image'];?>" alt="<?=$brands[5]['name'];?>" data-id="<?=$brands[5]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[6]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[6]['id'];?>"><img class="c-image" src="<?=$brands[6]['image'];?>" alt="<?=$brands[6]['name'];?>" data-id="<?=$brands[6]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[6]['id'];?>"><img class="c-image" src="<?=$brands[6]['image'];?>" alt="<?=$brands[6]['name'];?>" data-id="<?=$brands[6]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[7]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[7]['id'];?>"><img class="c-image" src="<?=$brands[7]['image'];?>" alt="<?=$brands[7]['name'];?>" data-id="<?=$brands[7]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[7]['id'];?>"><img class="c-image" src="<?=$brands[7]['image'];?>" alt="<?=$brands[7]['name'];?>" data-id="<?=$brands[7]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[8]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[8]['id'];?>"><img class="c-image" src="<?=$brands[8]['image'];?>" alt="<?=$brands[8]['name'];?>" data-id="<?=$brands[8]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[8]['id'];?>"><img class="c-image" src="<?=$brands[8]['image'];?>" alt="<?=$brands[8]['name'];?>" data-id="<?=$brands[8]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<?php if ($brands[9]['name'] != NULL): ?><div class="col-xs-5 col-sm-2 vert-align-center">
-				        		<a href="bsearch.php?search=<?=$brands[9]['id'];?>"><img class="c-image" src="<?=$brands[9]['image'];?>" alt="<?=$brands[9]['name'];?>" data-id="<?=$brands[9]['id'];?>" class="do-search-brand"></a><?php endif; ?>
-				        	</div>
+				        		<a href="bsearch.php?search=<?=$brands[9]['id'];?>"><img class="c-image" src="<?=$brands[9]['image'];?>" alt="<?=$brands[9]['name'];?>" data-id="<?=$brands[9]['id'];?>" class="do-search-brand"></a>
+				        	</div><?php endif; ?>
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
 				        </div>
 				      </div>
@@ -361,6 +373,7 @@ foreach ($basket as $b) {
 				      <span class="glyphicon glyphicon-chevron-right"></span>
 				      <span class="sr-only">Next</span>
 				    </a>
+				    <?php endif; ?>
 				  </div>
 				</div>
 			</div>
