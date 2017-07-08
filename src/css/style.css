@@ -294,10 +294,10 @@ span.logo-test{
 .sb-ware{
 	padding-bottom: 20px;
 }
-.border-right{
+.sb-settings .border-right{
 	border-right: 1px solid #f7f7f8;
 }
-.border-left{
+.sb-settings .border-left{
 	border-left: 1px solid #f7f7f8;
 }
 .settings{
