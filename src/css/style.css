@@ -436,6 +436,9 @@ span.logo-test{
 	height: 200px;
 	line-height: 200px;
 }
+.c-image {
+	height: 100%;
+}
 .glyphicon-chevron-left:before{
 	position: relative;
 	top: 4px;
