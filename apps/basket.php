@@ -1,6 +1,6 @@
 <?php 
 	include('../configs/config.php');
-	// if ($_POST) {
+	if ($_POST) {
 		if ($_SESSION) {
 			$basket = R::dispense('basket');
 			$basket->client = $_SESSION['id'];
@@ -18,35 +18,34 @@
 			$eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
 			$usd_rate = intval($usd[0]->rate);
 			$eur_rate = intval($eur[0]->rate);
-			$discount = $_SESSION['discount'];
-			if (strlen($discount == 1)) {
-				$discount = 0.01;
-			} elseif (strlen($discount == 2)) {
-				// $discount = 0.10;
-				echo $discount;
+			$discount = strval($_SESSION['discount']);
+			if (strlen($discount) == 1) {
+				$discount = "0.0".$discount;
+			} elseif (strlen($discount) == 2) {
+				$discount = "0.".$discount;
 			}
-
-			// echo var_dump($_SESSION);
-			// foreach ($basket as $b) {
-			// 	if ($_SESSION['id'] == $b['client']) {
-			// 		$countg = $countg + 1;
-			// 		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
-			// 			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
-			// 			$gcost = $gcost - ( $gcost * $_SES )
-			// 			$summ = $summ + 
-			// 		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
-			// 			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
-			// 			$summ = $summ + 
-			// 		}
-			// 	}
-			// }
+			$discount = floatval($discount);
+			foreach ($basket as $b) {
+				if ($_SESSION['id'] == $b['client']) {
+					$countg = $countg + 1;
+					if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
+						$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
+						$gcost = $gcost - ( $gcost * $discount );
+						$summ = $summ + ceil($gcost);
+					} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
+						$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
+						$gcost = $gcost - ( $gcost * $discount );
+						$summ = $summ + ceil($gcost);
+					}
+				}
+			}
 			$vars = [$countg, $summ];
-			// echo json_encode($vars);
+			echo json_encode($vars);
 		} else {
 			echo json_encode("nologon");
 		}
-	// } else {
-	// 	// header("Location:../index.php");
-	// }
+	} else {
+		header("Location:../index.php");
+	}
 
 ?>

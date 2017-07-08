@@ -23,17 +23,28 @@ $brandname = R::getCell("SELECT name FROM brands WHERE id = ".$brand);
 $goods = R::getAll("SELECT * FROM goods WHERE brand = ".$brand." AND cost > ".$from." AND cost < ".$to);
 $random_image = unserialize($random_goods['images']); 
 $random_image = $random_image[0]; 
-
+$discount = strval($_SESSION['discount']);
+if (strlen($discount) == 1) {
+	$discount = "0.0".$discount;
+} elseif (strlen($discount) == 2) {
+	$discount = "0.".$discount;
+}
+$discount = floatval($discount);
 foreach ($basket as $b) {
 	if ($_SESSION['id'] == $b['client']) {
 		$countg = $countg + 1;
 		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
-			$summ = $summ + R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
+			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
+			$gcost = $gcost - ( $gcost * $discount );
+			$summ = $summ + ceil($gcost);
 		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
-			$summ = $summ + R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
+			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
+			$gcost = $gcost - ( $gcost * $discount );
+			$summ = $summ + ceil($gcost);
 		}
 	}
-}?>
+}
+?>
 
 <!DOCTYPE html> 
 <html>
