@@ -32,7 +32,6 @@ $basket_goods_id = R::getAll("SELECT goods FROM basket WHERE client=".$_SESSION[
 for ($i = 0; $i < count($basket_goods_id); $i++) {
 	$clients_goods[$i] = R::getRow("SELECT * FROM goods WHERE id = ".$basket_goods_id[$i]['goods']);
 }
-// echo "<pre>"; echo var_dump($clients_goods); echo "</pre>";
 $basket_good = R::getAll("SELECT * FROM goods WHERE id=".$basket_goods_id);
 
 
