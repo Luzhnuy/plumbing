@@ -342,7 +342,7 @@ foreach ($basket as $b) {
 									</div>
 									<div class="col-md-6">
 										<div class="goods-add-basket">
-											<span class="btn btn-default btn-add-center btn-add-basket" data-id="<?=$good['id'];?>"><img src="../img/cart.png">Додати в кошик</span>
+											<button class="btn btn-default btn-add-basket-goods" data-id="<?=$good['id'];?>"><img src="../img/cart.png">Додати в кошик</button>
 										</div>
 									</div>
 									<div class="col-md-12 comments" style="display:none;">
