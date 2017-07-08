@@ -264,7 +264,7 @@ $random_image = $random_image[0];
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-12 col-sm-4 col-md-3">
+						<!-- <div class="col-xs-12 col-sm-4 col-md-3">
 							<div class="random-ware">
 								<h3>Випадковий товар</h3>
 								<h5><?=$random_goods['name'];?></h5>
@@ -278,7 +278,7 @@ $random_image = $random_image[0];
 								<div class="random-ware-img"><img src="../../<?=$random_brand['image'];?>" alt=""></div>
 								<h6><a href="../../bsearch.php?search=<?=$random_brand['id'];?>">Детальніше...</a></h6>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>

@@ -370,6 +370,7 @@ foreach ($basket as $b) {
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
 				        </div>
 				      </div>
+				      <?php if ($brands[5]['name'] != NULL): ?>
 				      <div class="item">
 				        <div class="row">
 				        	<div class="col-xs-1 col-sm-1 col-md-1"></div>
@@ -405,6 +406,7 @@ foreach ($basket as $b) {
 				      <span class="glyphicon glyphicon-chevron-right"></span>
 				      <span class="sr-only">Next</span>
 				    </a>
+				    <?php endif; ?>
 				  </div>
 				</div>
 			</div>
