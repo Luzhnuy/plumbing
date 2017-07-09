@@ -1,15 +1,28 @@
-$(document).ready(function(){
-    function check(){
-        var username = $("#id_username").val()
-        var password = $("#id_password").val()
-        var u = username.length
-        var p = password.length
-        if ( u === 0 || p === 0) {
-            $("#id_submit").attr("disabled", "true").css("cursor", "default").css("opacity", "0.3");
-        } else if ( u > 0 && p > 0) {
-            $("#id_submit").css("opacity", "1").css("cursor", "pointer").removeAttr("disabled");
+$(".btn-signin-user").on("click", function(){
+    var username = $("#id_username").val();
+    var password = $("#id_password").val();
+    $.ajax({
+        url: "../../apps/signin.php",
+        method: "POST",
+        data: ({
+            email: username,
+            password: password,
+        }),
+        success: function(data) {
+            function remove() {
+                $("#error-info").remove();
+            }
+            data = JSON.parse(data);
+            console.log(data);
+            if (data == "success") {
+                location.reload();                
+            } else if (data == "wrongpassword") {
+                var text = '<div id="error-info"> Неправильний пароль </div>';
+            } else if (data == "wronguser") {
+                var text = '<div id="error-info"> Користувач не існує </div>';
+            }
+            $("body").append(text);
+            setTimeout(remove, 2000);
         }
-    }
-
-    setInterval(check, 500); 
+    });
 });

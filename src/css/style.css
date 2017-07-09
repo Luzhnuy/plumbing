@@ -623,6 +623,7 @@ font-family: Russia-Light, sans-serif;
     padding: 30px;
     font-family: 'Ubuntu', sans-serif;
     font-size: 18px;
+	z-index: 9999;
 }
 
  /* -------------------- */

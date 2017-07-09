@@ -15,12 +15,12 @@
         if ($user_exist == true) {
             if (strtolower($user['password']) == strtolower($password)) {
                 $_SESSION = $user;
-                header("Location: ../index.php");
+                echo json_encode("success");
             } else {
-                header("Location: ../index.php?wrong=password");
+                echo json_encode("wrongpassword");
             }
         } else {
-            header("Location: ../index.php?wrong=username");
+            echo json_encode("wronguser");
         }
 	}
 

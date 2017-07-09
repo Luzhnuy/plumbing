@@ -132,7 +132,7 @@ foreach ($basket as $b) {
 			      </div>
 			      <!-- Футер модального окна -->
 			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-default btn-signin-user btn-sb-save">Ввійти</button>
+			        <span class="btn btn-default btn-signin-user btn-sb-save">Увійти</span>
 			      </div>
 			      </form>
 			    </div>
@@ -489,6 +489,7 @@ foreach ($basket as $b) {
 		<script src="../js/settings_toggle.js"></script>
 		<script src="../js/purchaseg.js"></script>
 		<script src="../js/show_image.js"></script>
+		<script src="../js/signin.js"></script>
 		<script type="text/javascript">$(window).on('load', function () {
     		var $preloader = $('#p_prldr'),
         	$svg_anm   = $preloader.find('.svg_anm');

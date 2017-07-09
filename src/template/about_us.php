@@ -90,7 +90,7 @@ $random_image = $random_image[0];
 			         <input type="password" id="id_password" name="password" class="form-control">
 			      </div>			      <!-- Футер модального окна -->
 			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-default btn-signin-user btn-sb-save">Ввійти</button>
+			        <span class="btn btn-default btn-signin-user btn-sb-save">Увійти</span>
 			      </div>
 			      </form>
 			    </div>
@@ -361,6 +361,7 @@ $random_image = $random_image[0];
 		<script src='../js/script.js'></script>
 		<script src="../js/back_connect.js"></script>
 		<script src="../js/settings_toggle.js"></script>
+		<script src="../js/signin.js"></script>
 
 		<script type="text/javascript">
 			$(window).on('load', function () {

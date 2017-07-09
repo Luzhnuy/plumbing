@@ -99,7 +99,7 @@ foreach ($basket as $b) {
 	      </div>
 	      <!-- Футер модального окна -->
 	      <div class="modal-footer">
-	        <button type="submit" class="btn btn-default btn-signin-user btn-sb-save">Увійти</button> <!--style="background-color: #464646;color:#fff;"-->
+	        <span class="btn btn-default btn-signin-user btn-sb-save">Увійти</span> <!--style="background-color: #464646;color:#fff;"-->
 	      </div>
 	      </form>
 	    </div>
@@ -504,6 +504,7 @@ foreach ($basket as $b) {
 		<script src="src/js/settings_toggle.js"></script>
 		<script src="src/js/purchase.js"></script>
 		<script src="src/js/doesntexist.js"></script>
+		<script src="src/js/signin.js"></script>
 		<script>
 			    //modal
     		$('.btn-signin').on('click', function(){
