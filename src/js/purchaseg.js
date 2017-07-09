@@ -1,4 +1,4 @@
-$(".btn-add-center").on("click", function(){
+$(".btn-add-basket-goods-js").on("click", function(){
 	var id = $(this).attr("data-id");
 	$.ajax({
 		url: "../../apps/basket.php",
@@ -16,7 +16,7 @@ $(".btn-add-center").on("click", function(){
 				$("#error-info").remove();
 			}
 			remove();
-			if (data[2] === null) {
+			if (typeof(data[2]) != Number ) {
 				var text = '<div id="error-info"> Додано </div>';
 			} else {
 				var text = '<div id="error-info"> Додано | Знижка:'+data[2]+'грн </div>';

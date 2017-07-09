@@ -353,7 +353,11 @@ foreach ($basket as $b) {
 									</div>
 									<div class="col-md-6">
 										<div class="goods-add-basket">
-											<button class="btn btn-default btn-add-basket-goods" data-id="<?=$good['id'];?>"><img src="../img/cart.png">Додати в кошик</button>
+											<?php if($good['is'] == 1): ?>
+											<button class="btn btn-default btn-add-basket-goods btn-add-basket-goods-js" data-id="<?=$good['id'];?>"><img src="../img/cart.png">Додати в кошик</button>											
+											<?php elseif($good['is'] == 0): ?>
+											<button class="btn btn-default btn-add-basket-goods">Товар тимчасово відсутній</button>	
+											<?php endif; ?>
 										</div>
 									</div>
 									<div class="col-md-12 comments" style="display:none;">

@@ -44,8 +44,13 @@ $brands = R::getAll("SELECT * FROM brands") ?>
 						<div class="admin-main-new-goods-top-name">
 							<input type="text" placeholder="Назва товару" name="name">
 						</div>
-						<div class="admin-main-new-goods-top-cost" >
+						<div class="admin-main-new-goods-top-cost">
 							<input type="number" placeholder="Ціна" name="cost">
+						</div>
+						<br><br>
+						<div class="admin-main-new-goods-top-cost">
+							<label class="foris" for="is">Присутній на складі</label>
+							<input type="checkbox" id="is" name="storage">
 						</div>
 					</div>
 					<textarea name="description" style="resize: none"></textarea>

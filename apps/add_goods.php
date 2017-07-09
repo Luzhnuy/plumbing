@@ -10,6 +10,10 @@
 			$category = $_POST['category'];
 			$brand = $_POST['brand'];
 			$currency = $_POST['currency'];
+			$is = 0;
+			if (isset($_POST['storage'])) {
+				$is = 1;
+			}
 			$images = $_FILES;
 			$gimages = [];
 			$noerror = true;
@@ -31,9 +35,10 @@
 				$goods->sales = 0;
 				$goods->currency = $currency;
 				$goods->images = $gimages;
+				$goods->is = $is;
 				$goods->data_add = date('h-i-s j-m-y');
 				R::store($goods);
-				header('Location:../admin/index.php');
+				header('Location:../admin/list/goods.php');
 			} else {
 				header("Location:../admin/add/goods.php");
 			}

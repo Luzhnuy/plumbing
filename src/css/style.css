@@ -355,10 +355,9 @@ span.logo-test{
 .ware-text p{
 	font-size: 14px;
 }
-.btn-add-center, .btn-reviews, .btn-add-basket{
+.btn-add-center, .btn-reviews, .btn-add-basket, .btn-add-center-isnt{
 	text-align: center;
 }
-
 .btn-add-basket img, .btn-add-basket-goods img, .btn-reviews img{
 	margin-right: 10px;
 }

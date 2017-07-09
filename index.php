@@ -302,7 +302,11 @@ foreach ($basket as $b) {
 										<a href="src/template/goods.php?goods=<?=$g['id']; ?>"><h3 class="h3-center"><?=$g['name'];?></h3></a>
 										<div class="ware-img"><a href="src/template/goods.php?goods=<?=$g['id']; ?>"><img src="<?=$img;?>"></a></div>
 										<h3 class="h3-center"><? if ($g['currency'] == 0){ echo $usd_rate*$g['cost'];}elseif($g['currency'] == 1){echo $eur_rate*$g['cost']; } else{ echo $g['cost'];} ?> Грн<img src="src/img/tags.png"></h3 class="h3-right">
+										<?php if($g['is'] == 1): ?>
 										<div class="btn-add-center" data-id="<?=$g['id'];?>"><span class="btn btn-default btn-add-basket"><img src="src/img/cart.png">Додати в кошик</span></div>
+										<?php elseif($g['is'] == 0): ?>
+										<div class="btn-add-center-isnt"><span class="btn btn-default">Товар тимчасово відсутній</span></div>
+										<?php endif; ?>
 									</div>
 									<?php endforeach;?>
 								</div>
@@ -316,7 +320,11 @@ foreach ($basket as $b) {
 										<a href="src/template/goods.php?goods=<?=$l['id']; ?>"><h3 class="h3-center"><?=$l['name'];?></h3></a>
 									<div class="ware-img"><a href="src/template/goods.php?goods=<?=$l['id']; ?>"><img src="<?=$img;?>"></a></div>
 										<h3 class="h3-center"><? if ($l['currency'] == 0){ echo $usd_rate*$l['cost'];}elseif($l['currency'] == 1){echo $eur_rate*$l['cost']; } else{ echo $l['cost'];} ?> Грн.<img src="src/img/tags.png"></h3 class="h3-right">
+										<?php if($l['is'] == 1): ?>
 										<div class="btn-add-center" data-id="<?=$l['id'];?>"><span class="btn btn-default btn-add-basket"><img src="src/img/cart.png">Додати в кошик</span></div>
+										<?php elseif($l['is'] == 0): ?>
+										<div class="btn-add-center-isnt"><span class="btn btn-default">Товар тимчасово відсутній</span></div>
+										<?php endif; ?>
 									</div>
 									<?php endforeach; ?>
 								</div>

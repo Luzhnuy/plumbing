@@ -8,6 +8,10 @@
 			$brand = $_POST['brand'];
 			$currency = $_POST['currency'];
 			$id = $_POST['id'];
+			$is = 0;
+			if (isset($_POST['storage'])) {
+				$is = 1;
+			}
 			$images = $_FILES;
 			$gimages = [];
 			$noerror = true;
@@ -36,8 +40,9 @@
 				$goods->brand = $brand;
 				$goods->images = $gimages;
 				$goods->currency = $currency;
+				$goods->is = $is;
 				R::store($goods);
-				header('Location:../admin/');
+				header('Location:../admin/list/goods.php');
 			} else {
 				header('Location:../admin/change/goods.php?goods='.$id);
 			}

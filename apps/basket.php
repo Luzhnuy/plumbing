@@ -1,6 +1,6 @@
 <?php 
 	include('../configs/config.php');
-	if ($_POST) {
+	// if ($_POST) {
 		if ($_SESSION) {
 			$basket = R::dispense('basket');
 			$basket->client = $_SESSION['id'];
@@ -52,14 +52,15 @@
 					$cgcost = $cgcost * $eur_rate;
 				}
 				$cgcost = $cgcost * $discount;
+				// echo $cgcost;
 				$vars = [$countg, $summ, intval($cgcost)];
 			}
 			echo json_encode($vars);
 		} else {
 			echo json_encode("nologon");
 		}
-	} else {
-		header("Location:../index.php");
-	}
+	// } else {
+	// 	header("Location:../index.php");
+	// }
 
 ?>

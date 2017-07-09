@@ -51,6 +51,11 @@ $goods_images = unserialize($goods['images']); ?>
 						<div class="admin-main-new-goods-top-cost" >
 							<input type="number" placeholder="Ціна" name="cost" value="<?=$goods['cost'];?>">
 						</div>
+						<br><br>
+						<div class="admin-main-new-goods-top-cost">
+							<label class="foris" for="is">Присутній на складі</label>
+							<input type="checkbox" id="is" name="storage" <?php if ($goods['is'] == 1): ?> checked <?php endif; ?>>
+						</div>
 					</div>
 					<textarea name="description" style="resize: none"><?=$goods['description'];?></textarea>
 					<div class="admin-main-new-goods-bot">

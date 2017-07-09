@@ -16,7 +16,7 @@ $(".btn-add-center").on("click", function(){
 				$("#error-info").remove();
 			}
 			remove();
-			if (data[2] === null) {
+			if (typeof(data[2]) != Number ) {
 				var text = '<div id="error-info"> Додано </div>';
 			} else {
 				var text = '<div id="error-info"> Додано | Знижка:'+data[2]+'грн </div>';

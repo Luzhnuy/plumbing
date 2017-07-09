@@ -321,7 +321,11 @@ foreach ($basket as $b) {
 						            			</div>
 						           			</div>
 						           			<div class="col-sm-7 col-sm-offset-5">
-						            			<span class="btn btn-default btn-add-basket btn-add-center" data-id="<?=$g['id'];?>"><img src="src/img/cart.png">Додати в кошик</span>
+						            			<?php if($g['is'] == 1): ?>
+												<div class="btn-add-center" data-id="<?=$g['id'];?>"><span class="btn btn-default btn-add-basket"><img src="src/img/cart.png">Додати в кошик</span></div>
+												<?php elseif($g['is'] == 0): ?>
+												<div class="btn-add-center-isnt"><span class="btn btn-default">Товар тимчасово відсутній</span></div>
+												<?php endif; ?>
 						           			</div>
 						          		</div>
 						         	</div>

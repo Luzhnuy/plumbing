@@ -383,3 +383,11 @@ input[type=file] {
     font-size: 20px;
     cursor: pointer;
 }
+
+.foris {
+    font-weight: 100;
+}
+
+#id {
+    height: 100px;
+}
