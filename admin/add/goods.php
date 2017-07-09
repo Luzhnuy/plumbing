@@ -45,7 +45,7 @@ $brands = R::getAll("SELECT * FROM brands") ?>
 							<input type="text" placeholder="Назва товару" name="name">
 						</div>
 						<div class="admin-main-new-goods-top-cost">
-							<input type="number" placeholder="Ціна" name="cost">
+							<input type="number" step="0.01" placeholder="Ціна" name="cost">
 						</div>
 						<br><br>
 						<div class="admin-main-new-goods-top-cost">

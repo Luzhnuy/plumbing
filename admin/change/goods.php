@@ -49,7 +49,7 @@ $goods_images = unserialize($goods['images']); ?>
 							<input type="text" placeholder="Ім'я" name="name" value="<?=$goods['name'];?>">
 						</div>
 						<div class="admin-main-new-goods-top-cost" >
-							<input type="number" placeholder="Ціна" name="cost" value="<?=$goods['cost'];?>">
+							<input type="number" step="0.01" placeholder="Ціна" name="cost" value="<?=$goods['cost'];?>">
 						</div>
 						<br><br>
 						<div class="admin-main-new-goods-top-cost">

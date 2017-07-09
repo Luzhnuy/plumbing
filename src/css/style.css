@@ -625,6 +625,10 @@ font-family: Russia-Light, sans-serif;
 	z-index: 9999;
 }
 
+
+.removegoods i {
+	cursor: pointer;
+}
  /* -------------------- */
 
 

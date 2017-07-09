@@ -1,6 +1,6 @@
 <?php 
 	include('../configs/config.php');
-	// if ($_POST) {
+	if ($_POST) {
 		if ($_SESSION) {
 			$basket = R::dispense('basket');
 			$basket->client = $_SESSION['id'];
@@ -14,10 +14,8 @@
 			$summ = 0;
 			$basket = R::getAll("SELECT * FROM basket");
 			$goods = R::getAll("SELECT * FROM goods");
-			$usd = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"));
-			$eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
-			$usd_rate = intval($usd[0]->rate);
-			$eur_rate = intval($eur[0]->rate);
+			$usd_rate = R::getCell("SELECT usd FROM currency");
+			$eur_rate = R::getCell("SELECT eur FROM currency");
 			$discount = strval($_SESSION['discount']);
 									
 			if (strlen($discount) == 1) {
@@ -32,11 +30,11 @@
 					if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
 						$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
 						$gcost = $gcost - ( $gcost * $discount );
-						$summ = $summ + ceil($gcost);
+						$summ = $summ + round($gcost, 2);
 					} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
 						$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
 						$gcost = $gcost - ( $gcost * $discount );
-						$summ = $summ + ceil($gcost);
+						$summ = $summ + round($gcost, 2);
 					}
 				}
 			}
@@ -52,15 +50,14 @@
 					$cgcost = $cgcost * $eur_rate;
 				}
 				$cgcost = $cgcost * $discount;
-				// echo $cgcost;
-				$vars = [$countg, $summ, intval($cgcost)];
+				$vars = [$countg, $summ, round($cgcost, 2)];
 			}
 			echo json_encode($vars);
 		} else {
 			echo json_encode("nologon");
 		}
-	// } else {
-	// 	header("Location:../index.php");
-	// }
+	} else {
+		header("Location:../index.php");
+	}
 
 ?>

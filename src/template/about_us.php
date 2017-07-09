@@ -1,8 +1,9 @@
 <?php include('../../configs/config.php');  
-$usd = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"));
-$eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
-$usd_rate = intval($usd[0]->rate);
-$eur_rate = intval($eur[0]->rate);
+include("../../apps/currency.php");
+
+$usd_rate = R::getCell("SELECT usd FROM currency");
+$eur_rate = R::getCell("SELECT eur FROM currency");
+
 $categories = R::getAll("SELECT * FROM categories ORDER BY category ASC");
 $lastgoods = R::getAll("SELECT * FROM goods ORDER BY id DESC LIMIT 2"); 
 $goods = R::getAll("SELECT * FROM goods");
@@ -28,11 +29,11 @@ foreach ($basket as $b) {
 		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
 			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
 			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + ceil($gcost);
+			$summ = $summ + round($gcost, 2);
 		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
 			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
 			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + ceil($gcost);
+			$summ = $summ + round($gcost, 2);
 		}
 	}
 }
@@ -268,7 +269,7 @@ $random_image = $random_image[0];
 								<h3>Випадковий товар</h3>
 								<h5><?=$random_goods['name'];?></h5>
 								<div class="random-ware-img"><img src="<?echo'../../'.$random_image;?>" alt=""></div>
-								<h3 class="h3-center"><? if ($random_goods['currency'] == 0){ echo $usd_rate*$random_goods['cost'];}elseif($random_goods['currency'] == 1){echo $eur_rate*$random_goods['cost']; } else{ echo $random_goods['cost'];} ?> Грн.<img src="../img/tags.png"></h3>
+								<h3 class="h3-center"><? if ($random_goods['currency'] == 0){ echo round($usd_rate*$random_goods['cost'], 2);}elseif($random_goods['currency'] == 1){echo round($eur_rate*$random_goods['cost'], 2); } else{ echo round($random_goods['cost'], 2);} ?> Грн.<img src="../img/tags.png"></h3>
 								<h6><a href="goods.php?goods=<?=$random_goods['id'];?>">Детальніше...</a></h6>
 							</div>
 							<div class="random-ware">

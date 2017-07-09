@@ -1,9 +1,9 @@
-<?php include('configs/config.php');
+<?php 
+include('configs/config.php');
+include("apps/currency.php");
 
-$usd = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"));
-$eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
-$usd_rate = intval($usd[0]->rate) ;
-$eur_rate = intval($eur[0]->rate) ;
+$usd_rate = R::getCell("SELECT usd FROM currency");
+$eur_rate = R::getCell("SELECT eur FROM currency");
 
 
 
@@ -36,15 +36,14 @@ foreach ($basket as $b) {
 		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
 			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
 			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + ceil($gcost);
+			$summ = $summ + round($gcost, 2);
 		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
 			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
 			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + ceil($gcost);
+			$summ = $summ + round($gcost, 2);
 		}
 	}
 }
-
 
 
 
@@ -301,7 +300,7 @@ foreach ($basket as $b) {
 									<div class="col-xs-6 col-sm-6 col-md-6 border-right">
 										<a href="src/template/goods.php?goods=<?=$g['id']; ?>"><h3 class="h3-center"><?=$g['name'];?></h3></a>
 										<div class="ware-img"><a href="src/template/goods.php?goods=<?=$g['id']; ?>"><img src="<?=$img;?>"></a></div>
-										<h3 class="h3-center"><? if ($g['currency'] == 0){ echo $usd_rate*$g['cost'];}elseif($g['currency'] == 1){echo $eur_rate*$g['cost']; } else{ echo $g['cost'];} ?> Грн<img src="src/img/tags.png"></h3 class="h3-right">
+										<h3 class="h3-center"><? if ($g['currency'] == 0){ echo round($usd_rate*$g['cost'], 2);}elseif($g['currency'] == 1){echo round($eur_rate*$g['cost'], 2); } else{ echo round($g['cost'], 2);} ?> Грн<img src="src/img/tags.png"></h3 class="h3-right">
 										<?php if($g['is'] == 1): ?>
 										<div class="btn-add-center" data-id="<?=$g['id'];?>"><span class="btn btn-default btn-add-basket"><img src="src/img/cart.png">Додати в кошик</span></div>
 										<?php elseif($g['is'] == 0): ?>
@@ -319,7 +318,7 @@ foreach ($basket as $b) {
 									<div class="col-xs-12 col-md-6 border-right">
 										<a href="src/template/goods.php?goods=<?=$l['id']; ?>"><h3 class="h3-center"><?=$l['name'];?></h3></a>
 									<div class="ware-img"><a href="src/template/goods.php?goods=<?=$l['id']; ?>"><img src="<?=$img;?>"></a></div>
-										<h3 class="h3-center"><? if ($l['currency'] == 0){ echo $usd_rate*$l['cost'];}elseif($l['currency'] == 1){echo $eur_rate*$l['cost']; } else{ echo $l['cost'];} ?> Грн.<img src="src/img/tags.png"></h3 class="h3-right">
+										<h3 class="h3-center"><? if ($l['currency'] == 0){ echo round($usd_rate*$l['cost'], 2);}elseif($l['currency'] == 1){echo round($eur_rate*$l['cost'], 2); } else{ echo round($l['cost'], 2);} ?> Грн<img src="src/img/tags.png"></h3 class="h3-right">
 										<?php if($l['is'] == 1): ?>
 										<div class="btn-add-center" data-id="<?=$l['id'];?>"><span class="btn btn-default btn-add-basket"><img src="src/img/cart.png">Додати в кошик</span></div>
 										<?php elseif($l['is'] == 0): ?>
@@ -335,7 +334,7 @@ foreach ($basket as $b) {
 								<h3>Випадковий товар</h3>
 								<h5><?=$random_goods['name'];?></h5>
 								<div class="random-ware-img"><img src="<?=$random_image;?>" alt=""></div>
-								<h3 class="h3-center"><?  if ($random_goods['currency'] == 0){ echo $usd_rate*$random_goods['cost'];}elseif($random_goods['currency'] == 1){echo $eur_rate*$random_goods['cost']; } else{ echo $random_goods['cost'];} ?> Грн.<img src="src/img/tags.png"></h3>
+								<h3 class="h3-center"><?  if ($random_goods['currency'] == 0){ echo round($usd_rate*$random_goods['cost'], 2);}elseif($random_goods['currency'] == 1){echo round($eur_rate*$random_goods['cost'], 2); } else{ echo round($random_goods['cost'], 2);} ?> Грн.<img src="src/img/tags.png"></h3>
 								<h6><a href="src/template/goods.php?goods=<?=$random_goods['id'];?>">Детальніше...</a></h6>
 							</div>
 							<div class="random-ware">

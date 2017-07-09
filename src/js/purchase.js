@@ -16,10 +16,10 @@ $(".btn-add-center").on("click", function(){
 				$("#error-info").remove();
 			}
 			remove();
-			if (typeof(data[2]) != Number ) {
+			if (typeof(data[2]) === "undefined" ) {
 				var text = '<div id="error-info"> Додано </div>';
 			} else {
-				var text = '<div id="error-info"> Додано | Знижка:'+data[2]+'грн </div>';
+				var text = '<div id="error-info"> Додано <br> Знижка -'+data[2]+'грн </div>';
 			}
 			$("body").append(text);
 			setTimeout(remove, 2000);
