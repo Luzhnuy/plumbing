@@ -220,6 +220,13 @@ foreach ($basket as $b) {
 														echo round($g['cost'], 2);
 													} ?>
 													<?php else: ?>
+														<strike class="strike"><?  if ($g['currency'] == 0){ 
+															echo round($usd_rate*$g['cost'], 2);
+														} elseif ($g['currency'] == 1) {
+															echo round($eur_rate*$g['cost'], 2); 
+														} else { 
+															echo round($g['cost'], 2);
+														} ?></strike>
 														<?  if ($g['currency'] == 0){ 
 															echo round($usd_rate*$g['cost'] - ($usd_rate*$g['cost'] * $discount), 2);
 														} elseif ($g['currency'] == 1) {
@@ -227,13 +234,6 @@ foreach ($basket as $b) {
 														} else { 
 															echo round($g['cost'], 2);
 														} ?>
-														<strike><?  if ($g['currency'] == 0){ 
-															echo round($usd_rate*$g['cost'], 2);
-														} elseif ($g['currency'] == 1) {
-															echo round($eur_rate*$g['cost'], 2); 
-														} else { 
-															echo round($g['cost'], 2);
-														} ?></strike>
 													<?php endif; ?>
 													Грн</h3 class="h3-right">
 									         	</div>
