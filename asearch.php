@@ -112,7 +112,7 @@ foreach ($basket as $b) {
 						<label for="text-input-fname" class="col-form-label">Ім'я</label>
 						<input class="form-control" type="text id="text-input-fname" name="name">
 
-						<label for="text-input-lname" class="col-form-label">Фамілія</label>
+						<label for="text-input-lname" class="col-form-label">Прізвище</label>
 						<input class="form-control" type="text" id="text-input-lname" name="lastname">
 
 						<label for="email-input" class="col-form-label">E-mail</label>

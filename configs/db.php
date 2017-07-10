@@ -2,16 +2,14 @@
 	include('config.php');
 
 	$user = R::dispense('users');
-	$user->username = 'Nazar';
-	$user->firstname = 'somelastname';
-	$user->lastname = 'somelastname';
-	$user->password = 'admin';
+	$user->username = 'admin';
+	$user->firstname = 'admin';
+	$user->lastname = 'admin';
+	$user->password = password_hash('admin', PASSWORD_DEFAULT);
 	$user->type = 'superadmin';
-	$user->email = 'nazar.l@ukr.net';
-	$user->phone = '+(067)966-80-07';
+	$user->email = 'admin';
+	$user->phone = 'admin';
 	$user->discount = 0;
 	R::store($user);
-
-
 
 ?>

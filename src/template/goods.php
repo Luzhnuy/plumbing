@@ -150,7 +150,7 @@ foreach ($basket as $b) {
 							<label for="text-input-fname" class="col-form-label">Ім'я</label>
 							<input class="form-control" type="text id="text-input-fname" name="name">
 
-							<label for="text-input-lname" class="col-form-label">Фамілія</label>
+							<label for="text-input-lname" class="col-form-label">Прізвище</label>
 							<input class="form-control" type="text" id="text-input-lname" name="lastname">
 
 							<label for="email-input" class="col-form-label">E-mail</label>
@@ -329,14 +329,14 @@ foreach ($basket as $b) {
 								    
 
 									  <!-- Controls -->
-									  <a class="left carousel-control" href="#goddsCarousel" role="button" data-slide="prev">
+									  <?php if ($good_images[3]): ?><a class="left carousel-control" href="#goddsCarousel" role="button" data-slide="prev">
 									    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 									    <span class="sr-only">Previous</span>
 									  </a>
 									  <a class="right carousel-control" href="#goddsCarousel" role="button" data-slide="next">
 									    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 									    <span class="sr-only">Next</span>
-									  </a>
+									  </a><? endif; ?>
 									</div>
 								</div>
 								<div class="goods-text">

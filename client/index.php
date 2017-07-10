@@ -197,10 +197,13 @@ foreach ($basket as $b) {
 				<div class="container">
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
+							Особисті дані
+							<hr>
 							<div class="search-result">
 								<?php if(!$clients_goods): ?>
 									<center><h2>Кошик порожній</h2></center>
 								<?php else: ?>
+								<center><h2>Кошик</h2></center><br>
 									<?php foreach ($clients_goods as $g): ?>
 										<?php $image = unserialize($g['images']); $image = $image[0]; ?>
 											<div class="sb-ware">

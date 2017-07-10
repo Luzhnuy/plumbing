@@ -13,7 +13,7 @@
             }
         }
         if ($user_exist == true) {
-            if (strtolower($user['password']) == strtolower($password)) {
+            if (password_verify($password, $user['password'])) {
                 $_SESSION = $user;
                 echo json_encode("success");
             } else {
