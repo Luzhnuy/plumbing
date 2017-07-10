@@ -629,6 +629,11 @@ font-family: Russia-Light, sans-serif;
 .removegoods i {
 	cursor: pointer;
 }
+
+.strike {
+	font-size: 15px;
+	opacity: 0.8;
+}
  /* -------------------- */
 
 
