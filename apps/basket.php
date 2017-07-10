@@ -18,6 +18,7 @@
 			$eur_rate = R::getCell("SELECT eur FROM currency");
 			$discount = strval($_SESSION['discount']);
 									
+
 			if (strlen($discount) == 1) {
 				$discount = "0.0".$discount;
 			} elseif (strlen($discount) == 2) {
