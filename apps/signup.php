@@ -11,7 +11,7 @@
 			$user = R::dispense('users');
 			$user->firstname = $name;
 			$user->lastname = $lastname;
-			$user->password = $pass;
+			$user->password = password_hash($pass, PASSWORD_DEFAULT);
 			$user->type = 'client';
 			$user->email = $email;
 			$user->phone = $phone; 
