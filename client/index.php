@@ -210,7 +210,32 @@ foreach ($basket as $b) {
 									         	</div>
 									        	<div class="col-sm-4 col-sm-offset-2">
 													<h3 class="h3-right removegoods"><i class="fa fa-times-circle" aria-hidden="true" data-id="<?=$g['id'];?>"></i></h3>
-									          		<h3 class="h3-right"><?  if ($g['currency'] == 0){ echo round($usd_rate*$g['cost'], 2);}elseif($g['currency'] == 1){echo round($eur_rate*$g['cost'], 2); } else{ echo round($g['cost'], 2);} ?> Грн<img src="../src/img/tags.png"></h3 class="h3-right">
+									          		<h3 class="h3-right">
+													<?php if ($discount == 0): ?>
+													<?  if ($g['currency'] == 0){ 
+														echo round($usd_rate*$g['cost'], 2);
+													} elseif ($g['currency'] == 1) {
+														echo round($eur_rate*$g['cost'], 2); 
+													} else { 
+														echo round($g['cost'], 2);
+													} ?>
+													<?php else: ?>
+														<?  if ($g['currency'] == 0){ 
+															echo round($usd_rate*$g['cost'] - ($usd_rate*$g['cost'] * $discount), 2);
+														} elseif ($g['currency'] == 1) {
+															echo round($eur_rate*$g['cost'] - ($eur_rate*$g['cost'] * $discount), 2); 
+														} else { 
+															echo round($g['cost'], 2);
+														} ?>
+														<strike><?  if ($g['currency'] == 0){ 
+															echo round($usd_rate*$g['cost'], 2);
+														} elseif ($g['currency'] == 1) {
+															echo round($eur_rate*$g['cost'], 2); 
+														} else { 
+															echo round($g['cost'], 2);
+														} ?></strike>
+													<?php endif; ?>
+													Грн</h3 class="h3-right">
 									         	</div>
 									        </div>
 									        <div class="row">
