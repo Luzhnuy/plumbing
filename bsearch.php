@@ -59,7 +59,9 @@ foreach ($basket as $b) {
 		<link rel="stylesheet" href="src/css/signup.css">
 	</head>
 	<body>
-		<div id="p_prldr"><div class="contpre"><span class="svg_anm"></span><br>Зачекайте<i class="fa fa-cog fa-spin fa-3x fa-fw"></i><br><small>сторінка завантажується</small></div></div>
+		<!-- <div id="p_prldr"><div class="contpre"><span class="svg_anm"></span><br>Зачекайте<i class="fa fa-cog fa-spin fa-3x fa-fw"></i><br><small>сторінка завантажується</small></div></div> -->
+
+		<div id="p_prldr"><div class="contpre"><span class="svg_anm"></div></div>
 	<!-- вхід -->
 	<div id="ModalSignin" class="modal fade modal-signin">
 	  <div class="modal-dialog">
@@ -432,12 +434,14 @@ foreach ($basket as $b) {
         		$("#ModalSignup").modal('show');
     		});
 		</script>
-				<script type="text/javascript">$(window).on('load', function () {
-    var $preloader = $('#p_prldr'),
-        $svg_anm   = $preloader.find('.svg_anm');
-    $svg_anm.fadeOut();
-    $preloader.delay(500).fadeOut('slow');
-});</script>
+		<script type="text/javascript">
+			$(window).on('load', function () {
+   				var $preloader = $('#p_prldr'),
+        		$svg_anm   = $preloader.find('.svg_anm');
+    			$svg_anm.fadeOut('slow',function(){$(this).remove();});
+    			$preloader.delay(500).fadeOut('slow');
+			});
+		</script>
 	</body>
 </html>
 <?php else: ?>

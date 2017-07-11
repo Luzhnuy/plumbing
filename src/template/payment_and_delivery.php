@@ -58,7 +58,9 @@ $random_image = $random_image[0];
 		<link rel="stylesheet" href="../css/signup.css">
 	</head>
 	<body>
-		<div id="p_prldr"><div class="contpre"><span class="svg_anm"></span><br>Зачекайте<i class="fa fa-cog fa-spin fa-3x fa-fw"></i><br><small>сторінка завантажується</small></div></div>
+		<!-- <div id="p_prldr"><div class="contpre"><span class="svg_anm"></span><br>Зачекайте<i class="fa fa-cog fa-spin fa-3x fa-fw"></i><br><small>сторінка завантажується</small></div></div> -->
+
+		<div id="p_prldr"><div class="contpre"><span class="svg_anm"></span>></div></div>
 		
 		<!-- вхід -->
 		<div id="ModalSignin" class="modal fade modal-signin">
@@ -362,13 +364,15 @@ $random_image = $random_image[0];
 		<script src='../js/script.js'></script>
 		<script src="../js/back_connect.js"></script>
 		<script src="../js/settings_toggle.js"></script>
-				<script type="text/javascript">$(window).on('load', function () {
-    var $preloader = $('#p_prldr'),
-        $svg_anm   = $preloader.find('.svg_anm');
-    $svg_anm.fadeOut();
-    $preloader.delay(500).fadeOut('slow');
-});</script>
-	<script>
+		<script type="text/javascript">
+			$(window).on('load', function () {
+    			var $preloader = $('#p_prldr'),
+       			$svg_anm   = $preloader.find('.svg_anm');
+    			$svg_anm.fadeOut('slow',function(){$(this).remove();});
+    			$preloader.delay(500).fadeOut('slow');
+			});
+		</script>
+		<script>
 			    //modal
     		$('.btn-signin').on('click', function(){
         		$("#ModalSignin").modal('show');
