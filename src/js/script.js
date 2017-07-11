@@ -16,8 +16,8 @@ $(document).ready(function(){
 	    $( "#slider-range" ).slider({
 	      range: true,
 	      min: 0,
-	      max: 1000,
-	      values: [ 0, 1000 ],
+	      max: 15000,
+	      values: [ 0, 15000 ],
 	      slide: function( event, ui ) {
 	        $('#price-from').val( ui.values[ 0 ]);
 	        $('#price-to').val( ui.values[ 1 ] );

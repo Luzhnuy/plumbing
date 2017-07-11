@@ -453,12 +453,14 @@ foreach ($basket as $b) {
         		$("#ModalSignup").modal('show');
     		});
 		</script>
-				<script type="text/javascript">$(window).on('load', function () {
-    var $preloader = $('#p_prldr'),
-        $svg_anm   = $preloader.find('.svg_anm');
-    $svg_anm.fadeOut();
-    $preloader.delay(500).fadeOut('slow');
-});</script>
+		<script type="text/javascript">
+			$(window).on('load', function () {
+    		var $preloader = $('#p_prldr'),
+        	$svg_anm   = $preloader.find('.svg_anm');
+    		$svg_anm.fadeOut();
+    		$preloader.delay(500).fadeOut('slow');
+			});
+		</script>
 	</body>
 </html>
 <?php else: ?>
