@@ -1,5 +1,4 @@
-<?php include('../configs/config.php');  
-include("../apps/currency.php");
+<?php include('../configs/config.php');
 if (!$_SESSION) {
 	header("Location: ../index.php");
 } 
