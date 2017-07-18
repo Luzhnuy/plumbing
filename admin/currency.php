@@ -1,4 +1,9 @@
-<?php include('../../configs/config.php'); $brands = R::getAll("SELECT * FROM brands ORDER BY id DESC"); ?>
+<?php include('../configs/config.php'); 
+
+$usd_rate = R::getCell("SELECT usd FROM currency");
+$eur_rate = R::getCell("SELECT eur FROM currency");
+
+?>
 <?php if ($_SESSION): ?>
 <?php if ($_SESSION['type'] == 'superadmin'): ?>
 
@@ -10,7 +15,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../../src/img/logo.png" type="image/x-icon">
-		<title>LIST | Brands</title>
+		<title>Currency</title>
 		<link rel="stylesheet" href="../../src/css/normalize.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,39 +31,38 @@
 		</div>
 		<div class="admin-nav">
 		    <ul class="hidden-sm hidden-xs">
-		    	<a href="../list/history.php"><li>Історія</li></a>
-		        <a href="../list/categories.php"><li>Категорії</li></a>
-		        <a href="../list/goods.php"><li>Товари</li></a>
-		        <a href="../list/users.php"><li>Користувачі</li></a>
-		        <a href="../list/brands.php" class="admin-nav-active-tab"><li>Бренди</li></a>
-		        <a href="../currency.php"><li>Курс валют</li></a>
+		    	<a href="list/history.php"><li>Історія</li></a>
+		        <a href="list/categories.php"><li>Категорії</li></a>
+		        <a href="list/goods.php"><li>Товари</li></a>
+		        <a href="list/users.php"><li>Користувачі</li></a>
+		        <a href="list/brands.php"><li>Бренди</li></a>
+		        <a href="currency.php" class="admin-nav-active-tab"><li>Курс валют</li></a>
 		    </ul>
 		    <div class="admin-open-nav hidden-md hidden-lg" data-move='>'><i class="fa fa-cog" aria-hidden="true"></i></div>
 		</div>
 		<div class="admin-main">
 			<div class="admin-main-content">
-				<div class="admin-main-add">
-					<a href="../add/brands.php"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-				</div>
-				<div class="admin-main-list-first">
-					Назва
-					<div class="admin-main-list-actions-example admin-main-list-actions-example">
-						<div class="admin-main-list-action-delete">Видалити</div>
+				<form action="../../apps/currency.php" method="POST" enctype="multipart/form-data">
+					<div class="admin-main-new-goods-top">
+						<div class="admin-main-new-goods-top-name">
+                            <div class="currency-label">Долар США</div>
+							<input type="number" step="0.01" name="usd" value="<?=$usd_rate;?>" class="currency-input" style="text-align: center">
+						</div>
+						<div class="admin-main-new-goods-top-name admin-main-new-top-right">
+                            <div class="currency-label">Євро</div>
+							<input type="number" step="0.01" name="eur" value="<?=$eur_rate;?>" class="currency-input" style="text-align: center">
+						</div>
 					</div>
-				</div>
-				<?php foreach($brands as $b): ?>
-				<div class="admin-main-list-element">
-					<?=$b['name'];?>
-					<div class="admin-main-list-actions admin-main-list-actions">
-						<a href="../../apps/delete_brand.php?brand=<?=$b['id'];?>"><div class="admin-main-list-action-delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div></a>
+					<div class="admin-main-new-goods-submit">
+						<button>Зберегти</button>
 					</div>
-				</div>
-				<?php endforeach; ?>
+				</form>
 			</div>
 		</div>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="../../src/js/admin.js"></script>
+	<script src="../../src/js/checker.js"></script>
 	</body>
 </html>	
 

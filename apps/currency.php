@@ -1,30 +1,34 @@
-<?php
-    $date = R::getCell("SELECT date FROM currency");
-    if ($date == "") {
-        $usd = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"));
-        $eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
-        $usd_rate = round($usd[0]->rate, 2);
-        $eur_rate = round($eur[0]->rate, 2);
-        $newdate = date("d.m");
-        $currency = R::dispense("currency");
-        $currency->date = $newdate;
-        $currency->usd = $usd_rate;
-        $currency->eur = $eur_rate;
-        R::store($currency);
-    } else {
-        $newdate = date("d.m");
-        if ($date != $newdate) {
-            $usd = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"));
-            $eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
-            if ($usd[0] != NULL and $eur[0] != NULL) {
-                $usd_rate = round($usd[0]->rate, 2);
-                $eur_rate = round($eur[0]->rate, 2);
-                $currencyid = R::getCell("SELECT id FROM currency");
-                $currency = R::load("currency", $currencyid);
-                $currency->date = $newdate;
-                $currency->usd = $usd_rate;
-                $currency->eur = $eur_rate;
-                R::store($currency);
+<?php include('../configs/config.php'); 
+    if ($_POST) {
+		if ($_SESSION and $_SESSION['type'] == "superadmin") {
+            $usd_rate = R::getCell("SELECT usd FROM currency");
+            $eur_rate = R::getCell("SELECT eur FROM currency");
+            $cost = R::getCell("SELECT cost FROM goods WHERE id = 43");
+            if ($eur_rate == "" or $usd_rate == "") {
+                if ($_POST['usd'] and $_POST['eur']) {
+                    $currency = R::dispense("currency");
+                    $currency->usd = round($_POST['usd'], 2);
+                    $currency->eur = round($_POST['eur'], 2);
+                    R::store($currency);
+                    header("Location: ../admin/currency.php");
+                } else {
+                    header("Location: ../admin/currency.php");
+                }
+            } else {
+                if ($_POST['usd'] and $_POST['eur']) {
+                    $currencyid = R::getCell("SELECT id FROM currency");
+                    $currency = R::load("currency", $currencyid);
+                    $currency->usd = round($_POST['usd'], 2);
+                    $currency->eur = round($_POST['eur'], 2);
+                    R::store($currency);
+                    header("Location: ../admin/currency.php");
+                } else {
+                    header("Location: ../admin/currency.php");
+                }
             }
-        }
-    }
+        } else {
+			header("Location: ../admin/");
+		}
+	} else {
+		header("Location:../index.php");
+	}

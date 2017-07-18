@@ -262,6 +262,16 @@ input::-webkit-inner-spin-button {
     display: inline-block;
 }
 
+.admin-main-new-top-right {
+    display: block;
+    float: right;
+}
+
+.currency-label {
+    text-align: center;
+    font-size: 17px;
+}
+
 .admin-main-new-goods-top-cost {
     float: right;
     display: inline-block;

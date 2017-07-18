@@ -31,6 +31,7 @@
 		        <a href="../list/goods.php" class="admin-nav-active-tab"><li>Товари</li></a>
 		        <a href="../list/users.php"><li>Користувачі</li></a>
 		        <a href="../list/brands.php"><li>Бренди</li></a>
+		        <a href="../currency.php"><li>Курс валют</li></a>
 		    </ul>
 		    <div class="admin-open-nav hidden-md hidden-lg" data-move='>'><i class="fa fa-cog" aria-hidden="true"></i></div>
 		</div>

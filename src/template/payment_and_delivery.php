@@ -1,5 +1,4 @@
-<?php include('../../configs/config.php');  
-include("../../apps/currency.php");
+<?php include('../../configs/config.php');
 
 $usd_rate = R::getCell("SELECT usd FROM currency");
 $eur_rate = R::getCell("SELECT eur FROM currency");
