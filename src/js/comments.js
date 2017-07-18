@@ -5,7 +5,6 @@ function Open_C(event){
 		// Close();
 		closeBackCall_C();
 	});
-	
 };
 
 

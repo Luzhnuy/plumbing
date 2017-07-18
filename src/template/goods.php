@@ -88,7 +88,7 @@ foreach ($basket as $b) {
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Добавити відгук</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">Залишити відгук</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -364,14 +364,7 @@ foreach ($basket as $b) {
 									</div>
 									<div class="col-md-12 comments" style="display:none;">
 									<div class="row">
-										<?php if($_SESSION){
-											echo '<button class="btn btn-default btn-comment col-md-12" style="background-color:#464646;color:#fff;">Добавити відгук</button>';
-										}else {
-											echo'<p>Щоб добавити відгук потрібно увійти</p>';
-										}
-
-
-										?>
+										<button class="btn btn-default btn-comment col-md-12" data-session="<?php if (!$_SESSION): ?>false<?php else:?>true<?php endif;?>" style="background-color:#464646;color:#fff;">Залишити відгук</button>
 										<?php if ($comments[0] != NULL): ?>
 										<?php foreach($comments as $com): ?>
 										<div class="col-md-12 comment" style="margin-top:5%;" >
@@ -505,8 +498,12 @@ foreach ($basket as $b) {
 		</script>
 		<script> 
 			$('.btn-comment').on('click', function(){
-        		$(".comment").modal('show');
-    		});
+				if ($(this).attr("data-session") == "true") {
+        			$(".comment").modal('show');
+				} else if ($(this).attr("data-session") == "false") {
+					$("#ModalSignin").modal('show');
+				}
+			});
 		</script>
 		<script>
 			    //modal
