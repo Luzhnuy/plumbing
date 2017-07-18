@@ -84,7 +84,7 @@ foreach ($basket as $b) {
 	</head>
 	<body>
 	<!-- форма для написанння коментарів -->
-			<div class="modal fade comment" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade comment" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -367,7 +367,7 @@ foreach ($basket as $b) {
 										<button class="btn btn-default btn-comment col-md-12" data-session="<?php if (!$_SESSION): ?>false<?php else:?>true<?php endif;?>" style="background-color:#464646;color:#fff;">Залишити відгук</button>
 										<?php if ($comments[0] != NULL): ?>
 										<?php foreach($comments as $com): ?>
-										<div class="col-md-12 comment" style="margin-top:5%;" >
+										<div class="col-md-12 comments-container" style="margin-top:5%;" >
 											<div class="col-md-6 col-md-offset-3 comment-text">	
 												<div class="row">
 													<div class="col-md-3">
