@@ -374,16 +374,7 @@ $random_image = $random_image[0];
 		<script src='../js/script.js'></script>
 		<script src="../js/back_connect.js"></script>
 		<script src="../js/settings_toggle.js"></script>
-<<<<<<< HEAD
 		<script src="../js/signin.js"></script>
-				<script type="text/javascript">$(window).on('load', function () {
-    var $preloader = $('#p_prldr'),
-        $svg_anm   = $preloader.find('.svg_anm');
-    $svg_anm.fadeOut();
-    $preloader.delay(500).fadeOut('slow');
-});</script>
-	<script>
-=======
 		<script type="text/javascript">
 			$(window).on('load', function () {
     			var $preloader = $('#p_prldr'),
@@ -393,7 +384,6 @@ $random_image = $random_image[0];
 			});
 		</script>
 		<script>
->>>>>>> nadya
 			    //modal
     		$('.btn-signin').on('click', function(){
         		$("#ModalSignin").modal('show');
