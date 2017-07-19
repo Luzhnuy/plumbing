@@ -68,6 +68,8 @@ foreach ($basket as $b) {
 		<link rel="shortcut icon" href="../src/img/logo.png" type="image/x-icon">
 		<title>Plumbing</title>
 
+		<link href="https://fonts.googleapis.com/css?family=Slabo+27px|Ubuntu" rel="stylesheet">
+
 		<!-- Normalize.css-->
 		<link rel="stylesheet" href="../src/css/normalize.css">
 
@@ -196,7 +198,39 @@ foreach ($basket as $b) {
 				<div class="container">
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
-							Особисті дані
+							<div class="gotobasket">
+								Перейти до кошика
+							</div>
+							<h2>Особисті дані</h2>
+							<?php if ($_SESSION['discount'] > 0): ?>
+								<h3>Ваша знижка: <?=$_SESSION['discount'];?>%</h3>
+							<?php endif; ?>
+							<form method="POST" action="../apps/changeuserinfo.php" class="newuserinfo">
+								<div>
+									Ім'я
+									<input type="text" name="firstname" value=<?=$_SESSION['firstname'];?>>
+								</div>
+								<div>
+									Фамілія
+									<input type="text" name="lastname" value=<?=$_SESSION['lastname'];?>>
+								</div>
+								<div>
+									Номер телефону
+									<input type="text" name="phone" value=<?=$_SESSION['phone'];?>>
+								</div>
+								<div>
+									E-mail
+									<input type="email" name="email" value=<?=$_SESSION['email'];?>>
+								</div>
+								<div>
+									Пароль
+									<span>Змінити</span>
+									<input type="password" name="password" style="display: none">
+								</div>
+								<div>
+									<center><button>Зберегти</button></center>
+								</div>
+							</form>
 							<hr>
 							<div class="search-result">
 								<?php if(!$clients_goods): ?>
@@ -352,6 +386,20 @@ foreach ($basket as $b) {
 	        	$svg_anm = $preloader.find('.svg_anm');
 	    		$svg_anm.fadeOut();
 	    		$preloader.delay(500).fadeOut('slow');
+			});
+		</script>
+		<script>
+			$(".newuserinfo div span").on("click", function(){
+				$(this).remove();
+				$('[name="password"]').css("display", "block");
+			});
+		</script>
+		<script>
+			$(".gotobasket").on("click", function(){
+				var scroll = $('.search-result').offset().top;
+				$("html, body").animate({
+					scrollTop: scroll-15
+				}, 1000);
 			});
 		</script>
 	</body>

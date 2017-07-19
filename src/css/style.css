@@ -634,6 +634,66 @@ font-family: Russia-Light, sans-serif;
 	font-size: 15px;
 	opacity: 0.8;
 }
+
+.newuserinfo div {
+	margin: 20px 0 20px 0;
+	font-family: "Ubuntu";
+	font-size: 16px;
+}
+
+.newuserinfo div span {
+	float: right;
+	margin-right: 50px;
+	cursor: pointer;
+	background-color: #464646;
+	color: #fff;
+	border-radius: 3px;
+	width: 100px;
+	text-align: center;
+}
+
+.newuserinfo div input {
+	border-radius: 3px;
+	padding: 5px;
+	padding-left: 10px;
+	width: 200px;
+	border: none;
+	box-shadow: 0 0 1px black;
+	float: right;
+	transition: 1s;
+}
+
+.newuserinfo div input:focus {
+	outline: none;
+	box-shadow: 0 0 3px blue;
+}
+
+.newuserinfo div button {
+	margin-top: 20px;
+	border-radius: 3px;
+	border: none;
+	background-color: #464646;
+	color: #fff;
+	padding: 5px;
+	width: 150px;
+}
+
+.newuserinfo div button:focus {
+	outline: none;
+}
+
+.gotobasket {
+	width: 150px;
+	background-color: #464646;
+	font-family: "Ubuntu";
+	padding: 5px;
+	border-radius: 3px;
+	float: right;
+	text-align: center;
+	cursor: pointer;
+	color: white
+}
+
  /* -------------------- */
 
 
