@@ -1,7 +1,6 @@
 <?php 
 	include('../configs/config.php'); 
 	
-
 	if ($_POST) {
 		if ($_SESSION and $_SESSION['type'] == "superadmin") {
 			$name = $_POST['name'];
@@ -38,12 +37,24 @@
 				$goods->is = $is;
 				$goods->data_add = date('h-i-s j-m-y');
 				R::store($goods);
+				$features = R::getAll("SELECT * FROM features WHERE category = ?", [ $category ]);
+				$i = 0;
+				foreach($features as $feature) {
+					$i = $i + 1;
+					if ($_POST['feature'.$i] != 0){
+						$options = R::dispense("options");
+						$options->goods = $goods->id;
+						$options->feature = $feature['id'];
+						$options->option = $_POST['feature'.$i];
+						R::store($options);
+					}
+				}
 				header('Location:../admin/list/goods.php');
 			} else {
 				header("Location:../admin/add/goods.php");
 			}
 		} else {
-			echo "kek";
+			header("Location:../index.php");
 		}
 	} else {
 		header("Location:../index.php");

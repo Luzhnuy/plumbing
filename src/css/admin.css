@@ -401,3 +401,36 @@ input[type=file] {
 #id {
     height: 100px;
 }
+
+.featureplus i {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.featureinput {
+    box-shadow: 0 0 1px grey; 
+    border: none !important;
+    margin: 5px 0 5px 0;
+    width: 150px;
+    background-color: white !important;
+    border-radius: 3px;
+}
+
+.featureactions i {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.featuremainspan {
+    display: block;
+}
+
+.featureoptionmain {
+    margin-left: 60px;
+}
+
+.optionmain {
+    display: block;
+}

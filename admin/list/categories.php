@@ -1,4 +1,4 @@
-<?php include('../../configs/config.php'); $categories = R::getAll("SELECT * FROM categories ORDER BY id DESC"); ?>
+<?php include('../../configs/config.php'); $categories = R::getAll("SELECT * FROM categories ORDER BY category ASC"); ?>
 <?php if ($_SESSION): ?>
 <?php if ($_SESSION['type'] == 'superadmin'): ?>
 

@@ -66,11 +66,9 @@ $brands = R::getAll("SELECT * FROM brands") ?>
 							<span class="admin-delete-picture"></span>
 						</div>
 						<div class="admin-main-new-goods-bot-category">
-							<select name="category">
-								<option value="0">Категорія</option>
-								<?php foreach ($categories as $category): ?>
-								<option value="<?=$category['id'];?>"><?=$category['category'];?></option>
-								<?php endforeach; ?>
+							<select name="currency">
+								<option value="0">Долар США</option>
+								<option value="1">Євро</option>
 							</select>
 							<br>
 							<select name="brand">
@@ -80,10 +78,16 @@ $brands = R::getAll("SELECT * FROM brands") ?>
 								<?php endforeach; ?>
 							</select>
 							<br>
-							<select name="currency">
-								<option value="0">Долар США</option>
-								<option value="1">Євро</option>
+							<select name="category" id="categoryselect">
+								<option value="0">Категорія</option>
+								<?php foreach ($categories as $category): ?>
+								<option value="<?=$category['id'];?>"><?=$category['category'];?></option>
+								<?php endforeach; ?>
 							</select>
+							<br>
+							<div class="featurescontainer">
+
+							</div>
 						</div>
 					</div>
 					<div class="admin-main-new-goods-submit-g">
@@ -97,6 +101,7 @@ $brands = R::getAll("SELECT * FROM brands") ?>
 	<script src="../../src/js/admin.js"></script>
 	<script src="../../src/js/checker.js"></script>
 	<script src="../../src/js/goods_images.js"></script>
+	<script src="../../src/js/features_goods.js"></script>
 	</body>
 </html>	
 

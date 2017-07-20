@@ -258,24 +258,25 @@ foreach ($basket as $b) {
 							<div class="sb-settings">
 								<span class="sb-span settings" data-status="hidden"><!-- <button class="settings"> --><span><img src="src/img/gear.png"></span><!-- </button> --> Налаштування пошуку</span>
 								<div class="toggle">
-								<form action="asearch.php" method="get">
+								<form action="asearch.php" method="post">
 									<div class="row">
 										<div class="cil-xs-12 col-md-4">
 											<div class="form-group">
 											    <label for="price-from">Ціна, від(грн)</label>
-											    <input type="text" class="form-control" id="price-from" placeholder="Пошук..." name="from">
+											    <input type="text" class="form-control" id="price-from" value="1" placeholder="Пошук..." name="from">
 											</div>
 										</div>
 										<div class="cil-xs-12 col-md-4">
 											<div class="form-group">
 											    <label for="price-to">Ціна, до(грн)</label>
-											    <input type="text" class="form-control" id="price-to" placeholder="Пошук..." name="to">
+											    <input type="text" class="form-control" id="price-to" value="15000" placeholder="Пошук..." name="to">
 											</div>
 										</div>
 										<div class="cil-xs-12 col-md-4">
 											<div class="form-group">
 											    <label for="brand">Бренд</label>
 											    <select class="form-control" id="brand" name="brand">
+												<option value="0">Не вибрано</option>
 												<? foreach($brands as $brand): ?>
 												<option value='<?=$brand['id'];?>'><?=$brand['name']; ?></option>
 												<? endforeach; ?>
@@ -287,6 +288,30 @@ foreach ($basket as $b) {
 												<div id="slider-range"></div>
 											</div>
 										</div>
+										<div class="cil-xs-12 col-md-4">
+											&nbsp;
+										</div>
+										<?php
+										$i = 0;
+										$features = R::getAll("SELECT * FROM features WHERE category = ?", [ $catalogid ]);
+										foreach($features as $feature):
+										$i = $i + 1;
+										$options = R::getAll("SELECT * FROM featureoptions WHERE category = ? AND feature = ?", [ $catalogid, $feature['id'] ]);
+										?>
+										<div class="cil-xs-12 col-md-4">
+											<div class="form-group">
+											    <label for="<?="feature".$i;?>"><?=$feature['feature'];?></label>
+											    <select class="form-control" name="<?="feature".$i;?>" id="<?="feature".$i;?>">
+												<option value="0">Не вибрано</option>
+												<? foreach($options as $option): ?>
+												<option value='<?=$option['id'];?>'><?=$option['option'];?></option>
+												<? endforeach; ?>
+											</select>
+											</div>
+										</div>
+										<?php endforeach; ?>
+										<input type="number" name="featurecount" value=<?=$i;?> hidden>
+										<input type="number" name="category" value=<?=$catalogid;?> hidden>
 										<div class="col-xs-12 col-md-4 col-md-offset-8">
 											<button class="btn btn-default btn-search-sb" >Знайти</button>
 										</div>
@@ -335,7 +360,7 @@ foreach ($basket as $b) {
 							</div>
 							<?php endforeach; ?>
 							<?php else: ?>
-								Товари відсутні
+								<center><h2>Товари відсутні</h2></center>
 							<?php endif; ?>
 							</div>
 						</div>
@@ -483,7 +508,7 @@ foreach ($basket as $b) {
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- Double Range -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="src/js/script.j"'></script>
+		<script src="src/js/script.js"></script>
 		<script src="src/js/back_connect.js"></script>
 		<script src="src/js/settings_toggle.js"></script>
 		<script src="src/js/purchase.js"></script>

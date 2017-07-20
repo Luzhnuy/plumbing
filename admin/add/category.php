@@ -27,7 +27,7 @@
 		<div class="admin-nav">
 		    <ul class="hidden-sm hidden-xs">
 		    	<a href="../list/history.php"><li>Історія</li></a>
-		        <a href="../list/categories.php"><li class="admin-nav-active-tab">Категорії</li></a>
+		        <a href="../list/categories.php" class="admin-nav-active-tab"><li>Категорії</li></a>
 		        <a href="../list/goods.php"><li>Товари</li></a>
 		        <a href="../list/users.php"><li>Користувачі</li></a>
 		        <a href="../list/brands.php"><li>Бренди</li></a>
@@ -38,8 +38,17 @@
 		<div class="admin-main">
 			<div class="admin-main-content">
 				<form action="../../apps/add_category.php" method="POST" enctype="multipart/form-data">
+					<input type="number" hidden name="featurescount">
+					<input type="text" hidden name="optionscount">
 					<div class="admin-main-new-goods-top">
 						<div class="admin-main-new-goods-top-name">
+							Характеристика
+							<div class="featuremain">
+
+							</div>
+							<span class="featureplus"><i class="fa fa-plus-circle" aria-hidden="true" id="newfeature"></i></span>
+						</div>
+						<div class="admin-main-new-goods-top-name admin-main-new-top-right">
 							<input type="text" placeholder="Назва категорії" name="name">
 						</div>
 					</div>
@@ -53,6 +62,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="../../src/js/admin.js"></script>
 	<script src="../../src/js/checker.js"></script>
+	<script src="../../src/js/features.js"></script>
 	</body>
 </html>	
 

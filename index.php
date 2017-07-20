@@ -255,45 +255,6 @@ foreach ($basket as $b) {
 				<div class="container">
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
-							<div class="sb-settings">
-								<span class="sb-span settings" data-status="hidden"><!-- <button class="settings"> --><span><img src="src/img/gear.png"></span><!-- </button> --> Налаштування пошуку</span>
-								<div class="toggle">
-								<form action="asearch.php" method="get">
-									<div class="row">
-										<div class="cil-xs-12 col-md-4">
-											<div class="form-group">
-											    <label for="price-from">Ціна, від(грн)</label>
-											    <input type="text" class="form-control" id="price-from" placeholder="Пошук..." name="from">
-											</div>
-										</div>
-										<div class="cil-xs-12 col-md-4">
-											<div class="form-group">
-											    <label for="price-to">Ціна, до(грн)</label>
-											    <input type="text" class="form-control" id="price-to" placeholder="Пошук..." name="to">
-											</div>
-										</div>
-										<div class="cil-xs-12 col-md-4">
-											<div class="form-group">
-											    <label for="brand">Бренд</label>
-											    <select class="form-control" id="brand" name="brand">
-												<? foreach($brands as $brand): ?>
-												<option value='<?=$brand['id'];?>'><?=$brand['name']; ?></option>
-												<? endforeach; ?>
-											</select>
-											</div>
-										</div>
-										<div class="col-xs-12 col-md-8">
-											<div class="form-group form-group-range">
-												<div id="slider-range"></div>
-											</div>
-										</div>
-										<div class="col-xs-12 col-md-4 col-md-offset-8">
-											<button class="btn btn-default btn-search-sb" >Знайти</button>
-										</div>
-									</div>
-								</form>
-								</div>
-							</div>
 							<div class="sb-ware">
 								<span class="sb-span star"><span><img src="src/img/star.png"></span>Хіти продажу</span>
 								<div class="row search-result">

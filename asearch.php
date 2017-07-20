@@ -1,4 +1,3 @@
-<?php if ($_GET): ?>
 <?php 
 include('configs/config.php');
 
@@ -6,9 +5,6 @@ $usd_rate = R::getCell("SELECT usd FROM currency");
 $eur_rate = R::getCell("SELECT eur FROM currency");
 $categories = R::getAll("SELECT category FROM categories ORDER BY category ASC");
 
-$from = $_GET['from'];
-$to = $_GET['to'];
-$brand = $_GET['brand'];
 $lastgoods = R::getAll("SELECT * FROM goods ORDER BY id DESC LIMIT 2");
 $goodsf = R::getAll("SELECT * FROM goods");
 $random = rand(0, count($goodsf)-1);
@@ -19,9 +15,7 @@ $random_brand = $brands[$randomb];
 $countg = 0;
 $summ = 0;
 $basket = R::getAll("SELECT * FROM basket");
-$brandname = R::getCell("SELECT name FROM brands WHERE id = ".$brand);
-$goods = R::getAll("SELECT * FROM goods WHERE brand = ".$brand." AND cost > ".$from." AND cost < ".$to);
-$random_image = unserialize($random_goods['images']); 
+$random_image = unserialize($random_goods['images']);
 $random_image = $random_image[0]; 
 $discount = strval($_SESSION['discount']);
 if (strlen($discount) == 1) {
@@ -44,6 +38,36 @@ foreach ($basket as $b) {
 		}
 	}
 }
+
+$from = $_POST['from'];
+$to = $_POST['to'];
+$brand = $_POST['brand'];
+$category = $_POST['category'];
+$catalogid = $category;
+$featurecount = $_POST['featurecount'];
+$goods = [];
+$sql = 'SELECT * FROM goods WHERE category = '.$category.' AND cost > '.$from.' AND cost < '.$to;
+if ($brand != 0 ) {
+	$sql = $sql.' AND brand = '.$brand;
+}
+$temp_goods = R::getAll($sql);
+$features = R::getAll("SELECT * FROM features WHERE category = ?", [ $category ]);
+foreach($temp_goods as $g) {
+	$correct = true;
+	for ($z = 1; $z <= $featurecount; $z++) {
+		if ($_POST['feature'.$z] != 0) {
+			$g_o = R::getCell("SELECT `option` FROM options WHERE goods = ? AND feature = ?", [ intval($g['id']), intval($features[$z-1]['id']) ]);
+			$c_o = $_POST['feature'.$z];
+			if ($g_o != $c_o) {
+				$correct = false;
+			}
+		}
+	}
+	if ($correct == true) {
+		$goods[] = $g;
+	}
+}
+$catalog = R::getCell("SELECT category FROM categories WHERE id = ?", [ $category ]);
 ?>
 
 <!DOCTYPE html> 
@@ -53,7 +77,7 @@ foreach ($basket as $b) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="src/img/logo.png" type="image/x-icon">
-		<title><?=$brandname; ?> </title>
+		<title><?=$catalog; ?> </title>
 
 		<!-- Normalize.css-->
 		<link rel="stylesheet" href="src/css/normalize.css">
@@ -246,7 +270,71 @@ foreach ($basket as $b) {
 				<div class="container">
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
-							<h2><?=$brandname;?></h2>
+							<h2><?=$catalog;?></h2>
+							<div class="sb-settings">
+								<span class="sb-span settings" data-status="hidden"><!-- <button class="settings"> --><span><img src="src/img/gear.png"></span><!-- </button> --> Налаштування пошуку</span>
+								<div class="toggle">
+								<form action="asearch.php" method="post">
+									<div class="row">
+										<div class="cil-xs-12 col-md-4">
+											<div class="form-group">
+											    <label for="price-from">Ціна, від(грн)</label>
+											    <input type="text" class="form-control" id="price-from" value="1" placeholder="Пошук..." name="from">
+											</div>
+										</div>
+										<div class="cil-xs-12 col-md-4">
+											<div class="form-group">
+											    <label for="price-to">Ціна, до(грн)</label>
+											    <input type="text" class="form-control" id="price-to" value="15000" placeholder="Пошук..." name="to">
+											</div>
+										</div>
+										<div class="cil-xs-12 col-md-4">
+											<div class="form-group">
+											    <label for="brand">Бренд</label>
+											    <select class="form-control" id="brand" name="brand">
+												<option value="0">Не вибрано</option>
+												<? foreach($brands as $brand): ?>
+												<option value='<?=$brand['id'];?>'><?=$brand['name']; ?></option>
+												<? endforeach; ?>
+											</select>
+											</div>
+										</div>
+										<div class="col-xs-12 col-md-8">
+											<div class="form-group form-group-range">
+												<div id="slider-range"></div>
+											</div>
+										</div>
+										<div class="cil-xs-12 col-md-4">
+											&nbsp;
+										</div>
+										<?php
+										$i = 0;
+										$features = R::getAll("SELECT * FROM features WHERE category = ?", [ $catalogid ]);
+										foreach($features as $feature):
+										$i = $i + 1;
+										$options = R::getAll("SELECT * FROM featureoptions WHERE category = ? AND feature = ?", [ $catalogid, $feature['id'] ]);
+										?>
+										<div class="cil-xs-12 col-md-4">
+											<div class="form-group">
+											    <label for="<?="feature".$i;?>"><?=$feature['feature'];?></label>
+											    <select class="form-control" name="<?="feature".$i;?>" id="<?="feature".$i;?>">
+												<option value="0">Не вибрано</option>
+												<? foreach($options as $option): ?>
+												<option value='<?=$option['id'];?>'><?=$option['option'];?></option>
+												<? endforeach; ?>
+											</select>
+											</div>
+										</div>
+										<?php endforeach; ?>
+										<input type="number" name="featurecount" value=<?=$i;?> hidden>
+										<input type="number" name="category" value=<?=$catalogid;?> hidden>
+										<div class="col-xs-12 col-md-4 col-md-offset-8">
+											<button class="btn btn-default btn-search-sb" >Знайти</button>
+										</div>
+									</div>
+								</form>
+								</div>
+							</div>
 							<div class="search-result">
 							<?php if($goods[0]['name'] != NULL): ?>
 							<?php foreach ($goods as $g): ?>
@@ -462,6 +550,3 @@ foreach ($basket as $b) {
 		</script>
 	</body>
 </html>
-<?php else: ?>
-<?php header("Location: /"); ?>
-<?php endif; ?>
