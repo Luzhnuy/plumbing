@@ -402,6 +402,10 @@ input[type=file] {
     height: 100px;
 }
 
+.featureplus {
+    margin-left: 70px;
+}
+
 .featureplus i {
     font-size: 20px;
     cursor: pointer;
@@ -409,12 +413,17 @@ input[type=file] {
 }
 
 .featureinput {
-    box-shadow: 0 0 1px grey; 
+    box-shadow: 0 0 1px black; 
     border: none !important;
     margin: 5px 0 5px 0;
     width: 150px;
     background-color: white !important;
     border-radius: 3px;
+    transition: 1s;
+}
+
+.featureinput:focus {
+    box-shadow: 0 0 5px grey;
 }
 
 .featureactions i {
@@ -428,9 +437,18 @@ input[type=file] {
 }
 
 .featureoptionmain {
-    margin-left: 60px;
 }
 
 .optionmain {
     display: block;
+}
+
+.category_featurer {
+    text-align: center;
+    width: 150px;
+}
+
+.featureinputoption {
+    width: 205px;
+    box-shadow: 0 0 1px grey;
 }

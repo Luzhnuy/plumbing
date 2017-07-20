@@ -42,12 +42,37 @@
 				$goods->currency = $currency;
 				$goods->is = $is;
 				R::store($goods);
+				$features = R::getAll("SELECT * FROM features WHERE category = ?", [$category]);
+				$_i = 0;
+				foreach($features as $feature) {
+					$_i = $_i + 1;
+					$newoption = $_POST['feature'.$_i];		
+					if ($newoption != 0) {
+						$oldoption = R::getCell("SELECT `option` FROM options WHERE feature = ? AND goods = ?", [ $feature['id'], $goods->id ]);
+						if ($oldoption == "") {
+							$options = R::dispense("options");
+							$options->goods = $goods->id;
+							$options->feature = $feature['id'];
+							$options->option = $_POST['feature'.$_i];
+							R::store($options);
+						} else {
+							if ($newoption != $oldoption) {
+								$optionid = R::getCell("SELECT id FROM options WHERE feature = ? AND goods = ?", [ $feature['id'], $goods->id ]);
+								$options = R::load("options", $optionid);
+								$options->goods = $goods->id;
+								$options->feature = $feature['id'];
+								$options->option = $_POST['feature'.$_i];
+								R::store($options);
+							}
+						}
+					}
+				};
 				header('Location:../admin/list/goods.php');
 			} else {
 				header('Location:../admin/change/goods.php?goods='.$id);
 			}
 		} else {
-			echo "Fuck out";
+			header("Location:../index.php");
 		}
 	} else {
 		header("Location:../index.php");

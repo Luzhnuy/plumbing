@@ -1,6 +1,9 @@
 <?php include('../../configs/config.php'); ?>
 <?php if ($_SESSION): ?>
-<?php if ($_SESSION['type'] == 'superadmin'): ?>
+<?php if ($_SESSION['type'] == 'superadmin'): 
+$categoryid = $_GET['category'];
+$category = R::load("categories", $categoryid);
+?>
 
 	
 <!DOCTYPE html>
@@ -10,7 +13,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../../src/img/logo.png" type="image/x-icon">
-		<title>ADD | Category</title>
+		<title>CHANGE | Category</title>
 		<link rel="stylesheet" href="../../src/css/normalize.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -37,7 +40,7 @@
 		</div>
 		<div class="admin-main">
 			<div class="admin-main-content">
-				<form action="../../apps/add_category.php" method="POST" enctype="multipart/form-data">
+				<form action="../../apps/change_category.php" method="POST" enctype="multipart/form-data">
 					<input type="number" hidden name="featurescount">
 					<input type="text" hidden name="optionscount">
 					<div class="admin-main-new-goods-top">
@@ -49,7 +52,7 @@
 							<span class="featureplus"><i class="fa fa-plus-circle" aria-hidden="true" id="newfeature"></i></span>
 						</div>
 						<div class="admin-main-new-goods-top-name admin-main-new-top-right">
-							<input type="text" placeholder="Назва категорії" name="name">
+							<input type="text" placeholder="Назва категорії" name="name" value="<?=$category['category'];?>">
 						</div>
 					</div>
 					<div class="admin-main-new-goods-submit">

@@ -8,7 +8,7 @@ function createAddFunction() {
         var _feature = $(this).attr("data-feature");
         options[_feature-1] = options[_feature-1] + 1;
         $("[name=optionscount]").val(options);
-        var optionInput = '<span class="optionmain optionmain'+options[_feature-1]+'"><input class="featureinput" name="feature'+_feature+'option'+options[_feature-1]+'"></input></span>';
+        var optionInput = '<span class="optionmain optionmain'+options[_feature-1]+'"><input class="featureinput featureinputoption" name="feature'+_feature+'option'+options[_feature-1]+'"></input></span>';
         $(".featureoptionmain"+_feature).append(optionInput);
         checkOptionsCount(_feature);
     });
@@ -55,12 +55,14 @@ function checkFeatureCount() {
         removeIs = true;
         createRemoveFunction();
     } else if (featureCount == 0 && removeIs == true) {
+        $(".featureplus").css("margin-left", "70px");
         $(".featureremove").remove();
         removeIs = false;
     }
 }
 
 $("#newfeature").on("click", function(){
+    $(".featureplus").css("margin-left", "60px");
     featureCount += 1;
     $("[name=featurescount]").val(featureCount);
     options.push(0);

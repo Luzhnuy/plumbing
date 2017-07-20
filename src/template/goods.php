@@ -290,7 +290,8 @@ foreach ($basket as $b) {
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
 							<div class="goods-section">
-								<h3><?= $good['name']; ?></h3>
+								<h3><?=$good['name']; ?></h3>
+								<h3 class="h3-center" style="position: absolute; right: 0; top: 0;"><? if ($random_goods['currency'] == 0){ echo round($usd_rate*$good['cost'], 2);}elseif($random_goods['currency'] == 1){echo round($eur_rate*$good['cost'], 2); } else{ echo round($good['cost'], 2);} ?> Грн.</h3>
 								<div class="goods-img">
 									<img src="<?php echo '../../'.$good_images[0]; ?>">
 								</div>
@@ -343,17 +344,33 @@ foreach ($basket as $b) {
 									</div>
 								</div>
 								<div class="goods-text">
-									<p><?= $good['description']; ?></p>
+									<?= $good['description']; ?>
 								</div>
+								<?php
+								$options = R::getAll('SELECT * FROM options WHERE goods = ?', [ $good['id'] ]);
+								if ($options[0]['feature'] != NULL):
+								?>
+								<div class="goods-page-features">
+									<h3>Характеристика</h3>
+									<span>
+									<?php foreach($options as $option): ?>
+										<?php $_feature = R::getRow("SELECT * FROM features WHERE id = ?", [ $option['feature'] ]);?>
+										<?php if ($_feature["category"] == $good["category"]): ?>
+										<?=$_feature['feature'];?>: <?php echo R::getCell("SELECT `option` FROM featureoptions WHERE id = ?", [$option['option']]);?><br> 
+										<?php endif; ?>
+									<?php endforeach; ?>
+									</span>
+								</div>
+								<?php endif; ?>
 								<div class="row">
-									<div class="col-md-6">
-										<div class="goods-rewievs">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+										<div class="goods-rewievs" style="text-align: center">
 											<button class="btn btn-default btn-reviews com-fade_in"><img src="../img/message.png">Відгуки</button>
 											<!-- style="overflow: hidden;background-color: #fff;border-color: #fff;" -->
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="goods-add-basket">
+									<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+										<div class="goods-add-basket" style="text-align: center">
 											<?php if($good['is'] == 1): ?>
 											<button class="btn btn-default btn-add-basket-goods btn-add-basket-goods-js" data-id="<?=$good['id'];?>"><img src="../img/cart.png">Додати в кошик</button>											
 											<?php elseif($good['is'] == 0): ?>
@@ -363,7 +380,7 @@ foreach ($basket as $b) {
 									</div>
 									<div class="col-md-12 comments" style="display:none;">
 									<div class="row">
-										<button class="btn btn-default btn-comment col-md-12" data-session="<?php if (!$_SESSION): ?>false<?php else:?>true<?php endif;?>" style="background-color:#464646;color:#fff;">Залишити відгук</button>
+										<button class="btn btn-default btn-comment col-md-12 col-sm-12 col-xs-12" data-session="<?php if (!$_SESSION): ?>false<?php else:?>true<?php endif;?>" style="background-color:#464646;color:#fff;">Залишити відгук</button>
 										<?php if ($comments[0] != NULL): ?>
 										<?php foreach($comments as $com): ?>
 										<div class="col-md-12 comments-container" style="margin-top:5%;" >

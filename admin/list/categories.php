@@ -42,14 +42,16 @@
 				</div>
 				<div class="admin-main-list-first">
 					Назва
-					<div class="admin-main-list-actions-example admin-main-list-actions-example">
+					<div class="admin-main-list-actions-example admin-main-list-actions-example-g">
+						<div class="admin-main-list-action-change">Редагувати</div>
 						<div class="admin-main-list-action-delete">Видалити</div>
 					</div>
 				</div>
 				<?php foreach($categories as $c): ?>
 				<div class="admin-main-list-element">
 					<?=$c['category'];?>
-					<div class="admin-main-list-actions admin-main-list-actions">
+					<div class="admin-main-list-actions admin-main-list-actions-g">
+						<a href="../change/category.php?category=<?=$c['id'];?>"><div class="admin-main-list-action-change"><i class="fa fa-pencil" aria-hidden="true"></i></div></a>
 						<a href="../../apps/delete_category.php?category=<?=$c['id'];?>"><div class="admin-main-list-action-delete"><i class="fa fa-trash-o" aria-hidden="true"></i></div></a>
 					</div>
 				</div>

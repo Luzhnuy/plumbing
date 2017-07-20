@@ -4,7 +4,8 @@ $brands = R::getAll("SELECT * FROM brands");
 $goods = R::load("goods", $_GET['goods']);
 $goods_images = unserialize($goods['images']); ?>
 <?php if ($_SESSION): ?>
-<?php if ($_SESSION['type'] == 'superadmin'): ?>
+<?php if ($_SESSION['type'] == 'superadmin'): 
+?>
 
 	
 <!DOCTYPE html>
@@ -74,13 +75,9 @@ $goods_images = unserialize($goods['images']); ?>
 							<span class="admin-delete-picture"></span>
 						</div>
 						<div class="admin-main-new-goods-bot-category">
-							<select name="category">
-								<?php foreach ($categories as $category): ?>
-								<option value="<?=$category['id'];?>" 
-								<?php if ($category['id'] == $goods['category']):?> selected <?php endif; ?>>
-									<?=$category['category'];?>
-								</option>
-								<?php endforeach; ?>
+							<select name="currency">
+								<option value="0">Долар США</option>
+								<option value="1">Євро</option>
 							</select>
 							<br>
 							<select name="brand">
@@ -92,10 +89,43 @@ $goods_images = unserialize($goods['images']); ?>
 								<?php endforeach; ?>
 							</select>
 							<br>
-							<select name="currency">
-								<option value="0">Долар США</option>
-								<option value="1">Євро</option>
+							<select name="category" id="categoryselect">
+								<?php foreach ($categories as $category): ?>
+								<option value="<?=$category['id'];?>" 
+								<?php if ($category['id'] == $goods['category']):?> selected <?php endif; ?>>
+									<?=$category['category'];?>
+								</option>
+								<?php endforeach; ?>
 							</select>
+							<?php
+								$features = R::getAll("SELECT * FROM features WHERE category = ?", [ $goods['category'] ]);
+								$options = [];
+								foreach($features as $feature) {
+									$featurearr = [];
+									$optionsdb = R::getAll("SELECT * FROM featureoptions WHERE feature = ? AND category = ?", [$feature['id'], $goods['category']]);
+									foreach($optionsdb as $o) {
+										$featurearr[] = $o;
+									}
+									$options[] = $featurearr;
+								}	
+							?>
+							<div class="featurescontainer">
+								<?php
+								$i = 0;
+								foreach($options as $o):	
+								$i = $i + 1;
+								$_f = $features[$i-1];
+								$g_options = R::getCell("SELECT `option` FROM options WHERE feature = ? AND goods = ?", [ $_f['id'], $goods['id'] ]);
+								?>
+								<select name="<?="feature".$i;?>">
+									<option value=0><?=$_f['feature'];?></option>
+									<?php foreach($o as $_o): ?>
+									<option <?php if($_o['id'] == $g_options): ?>selected<?php endif; ?> value="<?=$_o['id'];?>" ><?=$_o['option'];?></option>
+									<?php endforeach; ?>
+								</select>
+								<br>
+								<?php endforeach;?>								
+							</div>
 						</div>
 					</div>
 					<div class="admin-main-new-goods-submit-g">
@@ -109,6 +139,7 @@ $goods_images = unserialize($goods['images']); ?>
 	<script src="../../src/js/admin.js"></script>
 	<script src="../../src/js/checker.js"></script>
 	<script src="../../src/js/goods_images.js"></script>
+	<script src="../../src/js/features_goods.js"></script>
 	</body>
 </html>	
 

@@ -1,6 +1,6 @@
 <?php include('../configs/config.php'); 
 
-	// if ($_POST) {
+	if ($_POST) {
 		if ($_SESSION and $_SESSION['type'] == "superadmin") {
 			$categoryid = $_POST['category'];
             $features = R::getAll("SELECT * FROM features WHERE category = ?", [ $categoryid ]);
@@ -18,6 +18,6 @@
 		} else {
 		    header("Location:../index.php");
 		}
-	// } else {
-	// 	header("Location:../index.php");
-	// }
+	} else {
+		header("Location:../index.php");
+	}

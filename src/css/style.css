@@ -703,6 +703,15 @@ font-family: Russia-Light, sans-serif;
 	color: white
 }
 
+.goods-page-features {
+	text-align: right;
+	margin-bottom: 30px;
+}
+
+.goods-page-features span {
+	font-family: Russia-Medium, sans-serif;
+}
+
  /* -------------------- */
 
 
@@ -752,8 +761,11 @@ font-family: Russia-Light, sans-serif;
 	height: auto;
 }
 
-.goods-section .goods-text{
-
+.goods-text{
+	padding: 20px;
+	text-align: center;
+	font-family: Russia-Medium, sans-serif;
+	font-size: 17px;
 }
 
 .goods-section .goods-rewievs h2{
