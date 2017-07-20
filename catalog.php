@@ -483,7 +483,7 @@ foreach ($basket as $b) {
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- Double Range -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src="src/js/script.j"'></script>
+		<script src="src/js/script.js"></script>
 		<script src="src/js/back_connect.js"></script>
 		<script src="src/js/settings_toggle.js"></script>
 		<script src="src/js/purchase.js"></script>
