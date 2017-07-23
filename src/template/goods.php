@@ -474,7 +474,7 @@ foreach ($basket as $b) {
 								<div class="catalog">
 									<h4>Каталог товарів</h4><br>
 											<?php foreach($categories as $category): ?>
-									<a href="../catalog.php?catalog=<?=$category['category']; ?>"> <span><?=$category['category'];?></span></a>
+									<a href="../../catalog.php?catalog=<?=$category['category']; ?>"> <span><?=$category['category'];?></span></a>
 									<?php endforeach; ?>
 								</div>
 							</div>
