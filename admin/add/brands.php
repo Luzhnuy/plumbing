@@ -26,6 +26,7 @@
 		</div>
 		<div class="admin-nav">
 		    <ul class="hidden-sm hidden-xs">
+		    	<a href="../orders.php"><li>Замовлення</li></a>
 		    	<a href="../list/history.php"><li>Історія</li></a>
 		        <a href="../list/categories.php"><li>Категорії</li></a>
 		        <a href="../list/goods.php"><li>Товари</li></a>

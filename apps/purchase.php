@@ -1,12 +1,126 @@
 <?php include('../configs/config.php');
-if (!$_SESSION) {
-	header("Location: ../index.php");
-} 
-
-$usd_rate = R::getCell("SELECT usd FROM currency");
-$eur_rate = R::getCell("SELECT eur FROM currency");
 
 
+    $usd_rate = R::getCell("SELECT usd FROM currency");
+    $eur_rate = R::getCell("SELECT eur FROM currency");
+
+    $countg = 0;
+    $summ = 0;
+    $basket = R::getAll("SELECT * FROM basket");
+
+    $clients_goods = [];
+    $basket_goods_id = R::getAll("SELECT goods FROM basket WHERE client=".$_SESSION['id']);
+    for ($i = 0; $i < count($basket_goods_id); $i++) {
+        $clients_goods[] = R::getRow("SELECT * FROM goods WHERE id = ?", [ $basket_goods_id[$i]['goods'] ]);
+    }
+    $basket_good = R::getAll("SELECT * FROM goods WHERE id=".$basket_goods_id);
+
+
+    $discount = strval($_SESSION['discount']);
+    if (strlen($discount) == 1) {
+        $discount = "0.0".$discount;
+    } elseif (strlen($discount) == 2) {
+        $discount = "0.".$discount;
+    }
+    $discount = floatval($discount);
+    foreach ($basket as $b) {
+        if ($_SESSION['id'] == $b['client']) {
+            $countg = $countg + 1;
+            if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
+                $gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
+                $gcost = $gcost - ( $gcost * $discount );
+                $summ = $summ + round($gcost, 2);
+            } elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
+                $gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
+                $gcost = $gcost - ( $gcost * $discount );
+                $summ = $summ + round($gcost, 2);
+            }
+        }
+    }
+
+
+    $basket2 = R::getAll("SELECT goods FROM basket where client = ?", [ $_SESSION['id'] ]);
+    $ubasket = [];
+    foreach($basket2 as $b) {
+        $__basket['name'] = R::getCell("SELECT name FROM goods where id = ?", [ $b['goods'] ]);
+        $cost = R::getCell("SELECT cost FROM goods where id = ?", [ $b['goods'] ]);
+        $curr = R::getCell("SELECT currency FROM goods where id = ?", [ $b['goods'] ]);
+        if ($curr == 0) {
+            $gcost = $cost * $usd_rate;
+            $gcost = $gcost - ( $gcost * $discount );
+        } elseif ($curr == 1) {
+            $gcost = $cost * $eur_rate;
+            $gcost = $gcost - ( $gcost * $discount );
+        }
+        $__basket['cost'] = round($gcost, 2);
+        $ubasket[] = $__basket;
+    }
+    $orderid = 0;
+    $date = date("H:i d.m.Y");
+        if ($_POST) {
+            if ($basket[0]['id'] != NULL) {
+                $method = $_POST['purchasemethod'];
+                $dmethod = $_POST['getting'];
+                $order = R::dispense("orders");
+                $order->fullName = $_SESSION['firstname']." ".$_SESSION['lastname'];
+                $order->phone = $_POST['phone'];
+                if ($dmethod == "newp") {
+                    $order->dmethod = "Нова Пошта";
+                } elseif ($dmethod == "delivery") {
+                    $order->dmethod = "Кур'єрська доставка";
+                } elseif ($dmethod == "pickup") {
+                    $order->dmethod = "Самовивіз";
+                }
+                if ($method == "cash") {
+                    $order->method = "Готівка";
+                } elseif ($method == "ncash") {
+                    $order->method = "Картка або приват24";
+                }
+                if ($_POST['purchaseoption'] == NULL) {
+                    $order->option = "";
+                } else {
+                    $order->option = "[".$_POST['purchaseoption']."]";
+                }
+                $order->sum = $summ;
+                $order->email = $_SESSION['email'];
+                $order->date = $date;
+                $order->basket = serialize($ubasket);
+                R::store($order);
+                $orderid = $order->id;
+                R::exec("DELETE FROM basket where client = ?", [ $_SESSION['id'] ]);
+                $countg = 0;
+                $summ = 0;
+            }
+        }
+?>
+<?php if ($method == "cash"): ?>
+<?php
+
+
+require_once("libs/mailer/PHPMailerAutoload.php");
+$mail = new PHPMailer;
+
+$mail->IsSMTP();
+$mail->Host = "mx1.hostinger.com.ua";
+$mail->SMTPAuth = true;
+$mail->Username = "info@potik-shop.com";
+$mail->Password = "CzkihsllGbIOTlWINuM";
+$mail->SMTPSecure = "tls";
+$mail->Port = 587;
+$mail->CharSet = "UTF-8";
+
+$mail->setFrom('info@potik-shop.com', 'Info');
+$mail->addAddress('vladyslav.kurash@gmail.com');
+$mail->IsHTML(true);
+
+$mail->Subject = "Замовлення №".$orderid." [Готівка]";
+
+$mail->Body = '
+            <center><h3>Надійшло нове замовлення</h3>
+            <a href="http://plumbing/admin/orders.php?order='.$orderid.'">Перевірити</a></center>
+            ';
+
+$mail->send();
 
 $categories = R::getAll("SELECT * FROM categories ORDER BY category ASC");
 $lastgoods = R::getAll("SELECT * FROM goods ORDER BY id DESC LIMIT 2"); 
@@ -17,43 +131,14 @@ $brands = R::getAll("SELECT * FROM brands");
 $randomb = rand(0, count($brands)-1);
 $random_brand = $brands[$randomb];
 $hots = R::getAll("SELECT * FROM goods ORDER BY sales DESC LIMIT 2");
-$countg = 0;
-$summ = 0;
-$basket = R::getAll("SELECT * FROM basket");
+
 
 $random_image = unserialize($random_goods['images']); 
 $random_image = $random_image[0];  
 
-$clients_goods = [];
-$basket_goods_id = R::getAll("SELECT goods FROM basket WHERE client=".$_SESSION['id']);
-for ($i = 0; $i < count($basket_goods_id); $i++) {
-	$clients_goods[] = R::getRow("SELECT * FROM goods WHERE id = ?", [ $basket_goods_id[$i]['goods'] ]);
-}
-$basket_good = R::getAll("SELECT * FROM goods WHERE id=".$basket_goods_id);
 
 
 
-$discount = strval($_SESSION['discount']);
-if (strlen($discount) == 1) {
-	$discount = "0.0".$discount;
-} elseif (strlen($discount) == 2) {
-	$discount = "0.".$discount;
-}
-$discount = floatval($discount);
-foreach ($basket as $b) {
-	if ($_SESSION['id'] == $b['client']) {
-		$countg = $countg + 1;
-		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
-			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
-			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + round($gcost, 2);
-		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
-			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
-			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + round($gcost, 2);
-		}
-	}
-}
 
 
 
@@ -66,7 +151,7 @@ foreach ($basket as $b) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../src/img/logo.png" type="image/x-icon">
-		<title>Мій кабінет</title>
+		<title>Дякуємо за замовлення</title>
 
 		<link href="https://fonts.googleapis.com/css?family=Slabo+27px|Ubuntu" rel="stylesheet">
 
@@ -198,107 +283,8 @@ foreach ($basket as $b) {
 				<div class="container">
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
-							<div class="gotobasket">
-								Перейти до кошика
-							</div>
-							<h2>Особисті дані</h2>
-							<?php if ($_SESSION['discount'] > 0): ?>
-								<h3>Ваша знижка: <?=$_SESSION['discount'];?>%</h3>
-							<?php endif; ?>
-							<form method="POST" action="../apps/changeuserinfo.php" class="newuserinfo">
-								<div>
-									Ім'я
-									<input type="text" name="firstname" value=<?=$_SESSION['firstname'];?>>
-								</div>
-								<div>
-									Фамілія
-									<input type="text" name="lastname" value=<?=$_SESSION['lastname'];?>>
-								</div>
-								<div>
-									Телефон
-									<input type="text" name="phone" value=<?=$_SESSION['phone'];?>>
-								</div>
-								<div>
-									E-mail
-									<input type="email" name="email" value=<?=$_SESSION['email'];?>>
-								</div>
-								<div>
-									Пароль
-									<span>Змінити</span>
-									<input type="password" name="password" style="display: none" autofocus="autofocus">
-								</div>
-								<div>
-									<center><button>Зберегти</button></center>
-								</div>
-							</form>
-							<hr>
-							<div class="search-result">
-								<?php if(!$clients_goods): ?>
-									<center><h2>Кошик порожній</h2></center>
-								<?php else: ?>
-								<center><h2>Кошик</h2></center><br>
-								<center><div class="makeorder"><a href="checkout.php">Оформити замовлення</a></div></center>
-									<?php foreach ($clients_goods as $g): ?>
-										<?php $image = unserialize($g['images']); $image = $image[0]; ?>
-											<div class="sb-ware">
-											<div class="row">
-									         	<div class="col-sm-6">
-									          		<a href="../src/template/goods.php?goods=<?=$g['id']; ?>"><h3><?=$g['name'];?></h3></a>
-									         	</div>
-									        	<div class="col-sm-4 col-sm-offset-2">
-													<h3 class="h3-right removegoods"><i class="fa fa-times-circle" aria-hidden="true" data-id="<?=$g['id'];?>"></i></h3>
-									          		<h3 class="h3-right">
-													<?php if ($discount == 0): ?>
-													<?  if ($g['currency'] == 0){ 
-														echo round($usd_rate*$g['cost'], 2);
-													} elseif ($g['currency'] == 1) {
-														echo round($eur_rate*$g['cost'], 2); 
-													} else { 
-														echo round($g['cost'], 2);
-													} ?>
-													<?php else: ?>
-														<strike class="strike"><?  if ($g['currency'] == 0){ 
-															echo round($usd_rate*$g['cost'], 2);
-														} elseif ($g['currency'] == 1) {
-															echo round($eur_rate*$g['cost'], 2); 
-														} else { 
-															echo round($g['cost'], 2);
-														} ?></strike>
-														<?  if ($g['currency'] == 0){ 
-															echo round($usd_rate*$g['cost'] - ($usd_rate*$g['cost'] * $discount), 2);
-														} elseif ($g['currency'] == 1) {
-															echo round($eur_rate*$g['cost'] - ($eur_rate*$g['cost'] * $discount), 2); 
-														} else { 
-															echo round($g['cost'], 2);
-														} ?>
-													<?php endif; ?>
-													Грн</h3 class="h3-right">
-									         	</div>
-									        </div>
-									        <div class="row">
-									         	<div class="col-sm-3">
-									          		<div class="ware-img">
-									           			<img src="/<?=$image;?>">
-									          		</div>
-									        	</div>
-									        	<div class="col-sm-9">
-									          		<div class="row">
-									           			<div class="col-sm-12">
-									            			<div class="ware-text">
-													             <p>
-													              <?=$g['description'];?> 
-													             </p>
-									            			</div>
-									           			</div>
-									          		</div>
-									         	</div>
-									        </div>
-										</div>
-									<?php endforeach;?>
-								<?php endif; ?>	
-							</div>
+                            <center><h3>Замовлення надійшло до опрацювання</h3></center>
 						</div>
-						
 						<div class="col-xs-12 col-sm-4 col-md-3">
 							<div class="random-ware">
 								<h3>Випадковий товар</h3>
@@ -405,3 +391,6 @@ foreach ($basket as $b) {
 		</script>
 	</body>
 </html>
+<?php elseif ($method == "ncash"): ?>
+
+<?php endif; ?>  

@@ -11,8 +11,9 @@
 				$image_name = $image['name'];
 				$image_path = $image['tmp_name'];
 				R::store($brand);
-				if(move_uploaded_file($image_path, '../src/brands_images/'.$image_name))
-					$pdo->query('UPDATE brands SET image="src/brands_images/'.$image_name.'" WHERE id ='.$brand['id']);
+				$uid = md5(uniqid(rand(),1));
+				if(move_uploaded_file($image_path, '../src/brands_images/'.$uid.".png"))
+					$pdo->query('UPDATE brands SET image="src/brands_images/'.$uid.'.png" WHERE id ='.$brand['id']);
 				header('Location:../admin/list/brands.php');
 			}
 		} else {

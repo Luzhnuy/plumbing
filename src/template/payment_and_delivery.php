@@ -48,7 +48,7 @@ $random_image = $random_image[0];
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
-		<title>Plumbing</title>
+		<title>Оплата і доставка</title>
 
 		<!-- Normalize.css-->
 		<link rel="stylesheet" href="../css/normalize.css">

@@ -55,7 +55,7 @@ foreach ($basket as $b) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="src/img/logo.png" type="image/x-icon">
-		<title>Plumbing</title>
+		<title>Головна</title>
 
 		<!-- Normalize.css-->
 		<link rel="stylesheet" href="src/css/normalize.css">

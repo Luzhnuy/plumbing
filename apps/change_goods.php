@@ -23,8 +23,9 @@
 			}
 			foreach ($images as $image) {
 				if($image['error'] != 4) {
-					if(move_uploaded_file($image['tmp_name'], '../src/goods_images/'.$image['name'])) {
-						$gimages[] = 'src/goods_images/'.$image['name'];
+					$uid = md5(uniqid(rand(),1));
+					if(move_uploaded_file($image['tmp_name'], '../src/goods_images/'.$uid.'.png')) {
+						$gimages[] = 'src/goods_images/'.$uid.'.png';
 					} else {
 						$noerror = false;
 					}

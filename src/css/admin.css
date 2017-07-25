@@ -452,3 +452,37 @@ input[type=file] {
     width: 205px;
     box-shadow: 0 0 1px grey;
 }
+
+#ordernum {
+    margin: 10px; 
+    padding: 5px;
+    text-align: center;
+    border: none;
+    box-shadow: 0 0 1px grey;
+    border-radius: 3px;
+}
+
+#ordernum:focus {
+    outline: none;
+}
+
+#ordernumsearch {
+    background-color: #23282d;
+    width: 150px;
+    display: inline-block;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.admin-modal-user-close {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+}
+
+.admin-modal-user-close i {
+    cursor: pointer;
+    font-size: 18px;
+}

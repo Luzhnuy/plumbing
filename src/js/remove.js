@@ -18,7 +18,10 @@ $(".removegoods i").on("click", function(){
             $("#countg").text("").append("<img src='../src/img/cart.png'> " + data[0] + " товарів");
 			$("#summ").text("").append("всього: " + data[1] + " грн");
             $("body").append(text);
-			setTimeout(removeinfo, 2000);
+            if (data[0] == 0) {
+                $(".makeorder").remove();
+            }
+            setTimeout(removeinfo, 2000);
         }
     })
 });

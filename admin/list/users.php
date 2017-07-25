@@ -22,6 +22,7 @@
 	<body>
 		<div class="admin-hidden-wrapper">
 			<div class="admin-hidden-user-main col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+				<span class="admin-modal-user-close"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
 				<div class="admin-hidden-user-main-title"></div>
 				<input type="number">
 				<button class="admin-hidden-user-main-button">
@@ -34,6 +35,7 @@
 		</div>
 		<div class="admin-nav">
 		    <ul class="hidden-sm hidden-xs">
+		    	<a href="../orders.php"><li>Замовлення</li></a>
 		    	<a href="../list/history.php"><li>Історія</li></a>
 		        <a href="../list/categories.php"><li>Категорії</li></a>
 		        <a href="../list/goods.php"><li>Товари</li></a>

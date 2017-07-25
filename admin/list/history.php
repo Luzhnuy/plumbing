@@ -34,6 +34,7 @@
 		</div>
 		<div class="admin-nav">
 		    <ul class="hidden-sm hidden-xs">
+		    	<a href="../orders.php"><li>Замовлення</li></a>
 		    	<a href="../list/history.php" class="admin-nav-active-tab"><li>Історія</li></a>
 		        <a href="../list/categories.php"><li>Категорії</li></a>
 		        <a href="../list/goods.php"><li>Товари</li></a>
@@ -46,17 +47,18 @@
 		<div class="admin-main">
 			<div class="admin-main-content">
 				<div class="admin-main-list-first">
-					Ім'я Фамілія[Номер телефону]
 					<div class="admin-main-list-actions-example">
 						<div class="admin-main-list-action-change">Дата</div>
 					</div>
+					Ім'я Фамілія[Телефон]
 				</div>
 				<?php foreach ($history as $story): ?>
 				<div class="admin-main-list-element">
-					<?=$story['story'];?>
 					<div class="admin-main-list-actions">
 						<?=$story['date'];?>
 					</div>
+					<br>
+					<?=$story['story'];?>
 				</div>
 				<?php endforeach; ?>
 			</div>

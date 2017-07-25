@@ -63,7 +63,7 @@ foreach ($basket as $b) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
-		<title>Plumbing</title>
+		<title><?=$good['name']; ?></title>
 
 		<!-- Normalize.css-->
 		<link rel="stylesheet" href="../css/normalize.css">
@@ -356,7 +356,10 @@ foreach ($basket as $b) {
 									<?php foreach($options as $option): ?>
 										<?php $_feature = R::getRow("SELECT * FROM features WHERE id = ?", [ $option['feature'] ]);?>
 										<?php if ($_feature["category"] == $good["category"]): ?>
-										<?=$_feature['feature'];?>: <?php echo R::getCell("SELECT `option` FROM featureoptions WHERE id = ?", [$option['option']]);?><br> 
+											<?php $_option = R::getCell("SELECT `option` FROM featureoptions WHERE id = ?", [$option['option']]);?>
+											<?php if ($_option != NULL and $_option != ''): ?>	
+												<?=$_feature['feature'];?>: <?=$_option;?><br>
+											<?php endif; ?> 
 										<?php endif; ?>
 									<?php endforeach; ?>
 									</span>
@@ -473,8 +476,8 @@ foreach ($basket as $b) {
 							<div class="catalog-ware">
 								<div class="catalog">
 									<h4>Каталог товарів</h4><br>
-											<?php foreach($categories as $category): ?>
-									<a href="../../catalog.php?catalog=<?=$category['category']; ?>"> <span><?=$category['category'];?></span></a>
+									<?php foreach($categories as $category): ?>
+										<a href="../../catalog.php?catalog=<?=$category['category']; ?>"> <span><?=$category['category'];?></span></a>
 									<?php endforeach; ?>
 								</div>
 							</div>

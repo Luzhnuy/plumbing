@@ -2,6 +2,11 @@
 if (!$_SESSION) {
 	header("Location: ../index.php");
 } 
+$checkbasket = R::getAll("SELECT * FROM basket where client = ?", [ $_SESSION['id'] ]);  
+
+if ($checkbasket[0]['id'] == NULL) {
+    header("Location: index.php");
+}
 
 $usd_rate = R::getCell("SELECT usd FROM currency");
 $eur_rate = R::getCell("SELECT eur FROM currency");
@@ -66,7 +71,7 @@ foreach ($basket as $b) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="../src/img/logo.png" type="image/x-icon">
-		<title>Мій кабінет</title>
+		<title>Оформлення замовлення</title>
 
 		<link href="https://fonts.googleapis.com/css?family=Slabo+27px|Ubuntu" rel="stylesheet">
 
@@ -185,7 +190,7 @@ foreach ($basket as $b) {
 						</div>
 						<div class="col-xs-12 col-sm-4 col-md-3">
 						<? if($_SESSION) {
-							echo '<a href="../../apps/logout.php"><button class="btn btn-default dropdown-toggle btn-my-room" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="../src/img/user.png"></span>Вийти</button></a>';
+							echo '<a href="index.php"><button class="btn btn-default dropdown-toggle btn-my-room" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="../src/img/user.png"></span>Мій кабінет</button></a>';
 						} else {
 							header('Location:../index.php');
 						}
@@ -198,106 +203,37 @@ foreach ($basket as $b) {
 				<div class="container">
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
-							<div class="gotobasket">
-								Перейти до кошика
-							</div>
-							<h2>Особисті дані</h2>
-							<?php if ($_SESSION['discount'] > 0): ?>
-								<h3>Ваша знижка: <?=$_SESSION['discount'];?>%</h3>
-							<?php endif; ?>
-							<form method="POST" action="../apps/changeuserinfo.php" class="newuserinfo">
-								<div>
-									Ім'я
-									<input type="text" name="firstname" value=<?=$_SESSION['firstname'];?>>
-								</div>
-								<div>
-									Фамілія
-									<input type="text" name="lastname" value=<?=$_SESSION['lastname'];?>>
-								</div>
-								<div>
-									Телефон
-									<input type="text" name="phone" value=<?=$_SESSION['phone'];?>>
-								</div>
-								<div>
-									E-mail
-									<input type="email" name="email" value=<?=$_SESSION['email'];?>>
-								</div>
-								<div>
-									Пароль
-									<span>Змінити</span>
-									<input type="password" name="password" style="display: none" autofocus="autofocus">
-								</div>
-								<div>
-									<center><button>Зберегти</button></center>
-								</div>
-							</form>
-							<hr>
-							<div class="search-result">
-								<?php if(!$clients_goods): ?>
-									<center><h2>Кошик порожній</h2></center>
-								<?php else: ?>
-								<center><h2>Кошик</h2></center><br>
-								<center><div class="makeorder"><a href="checkout.php">Оформити замовлення</a></div></center>
-									<?php foreach ($clients_goods as $g): ?>
-										<?php $image = unserialize($g['images']); $image = $image[0]; ?>
-											<div class="sb-ware">
-											<div class="row">
-									         	<div class="col-sm-6">
-									          		<a href="../src/template/goods.php?goods=<?=$g['id']; ?>"><h3><?=$g['name'];?></h3></a>
-									         	</div>
-									        	<div class="col-sm-4 col-sm-offset-2">
-													<h3 class="h3-right removegoods"><i class="fa fa-times-circle" aria-hidden="true" data-id="<?=$g['id'];?>"></i></h3>
-									          		<h3 class="h3-right">
-													<?php if ($discount == 0): ?>
-													<?  if ($g['currency'] == 0){ 
-														echo round($usd_rate*$g['cost'], 2);
-													} elseif ($g['currency'] == 1) {
-														echo round($eur_rate*$g['cost'], 2); 
-													} else { 
-														echo round($g['cost'], 2);
-													} ?>
-													<?php else: ?>
-														<strike class="strike"><?  if ($g['currency'] == 0){ 
-															echo round($usd_rate*$g['cost'], 2);
-														} elseif ($g['currency'] == 1) {
-															echo round($eur_rate*$g['cost'], 2); 
-														} else { 
-															echo round($g['cost'], 2);
-														} ?></strike>
-														<?  if ($g['currency'] == 0){ 
-															echo round($usd_rate*$g['cost'] - ($usd_rate*$g['cost'] * $discount), 2);
-														} elseif ($g['currency'] == 1) {
-															echo round($eur_rate*$g['cost'] - ($eur_rate*$g['cost'] * $discount), 2); 
-														} else { 
-															echo round($g['cost'], 2);
-														} ?>
-													<?php endif; ?>
-													Грн</h3 class="h3-right">
-									         	</div>
-									        </div>
-									        <div class="row">
-									         	<div class="col-sm-3">
-									          		<div class="ware-img">
-									           			<img src="/<?=$image;?>">
-									          		</div>
-									        	</div>
-									        	<div class="col-sm-9">
-									          		<div class="row">
-									           			<div class="col-sm-12">
-									            			<div class="ware-text">
-													             <p>
-													              <?=$g['description'];?> 
-													             </p>
-									            			</div>
-									           			</div>
-									          		</div>
-									         	</div>
-									        </div>
-										</div>
-									<?php endforeach;?>
-								<?php endif; ?>	
-							</div>
-						</div>
+                            <form action="../apps/purchase.php" method="POST">
+                                    <center><h3>Спосіб оплати</h3></center>
+                                <div class="flexmain">
+                                    <br>
+                                    <div class="flexel"><label for="ncash">Карткою або приват24</label>
+                                    <input type="radio" name="purchasemethod" id="ncash" value="ncash" checked></div>
+                                    <div class="flexel"><label for="cash">Готівка</label>
+                                    <input type="radio" name="purchasemethod" id="cash" value="cash"></div>
+                                </div>
+                                    <center><h3>Спосіб отримання товару</h3></center>
+                                <div class="flexmain">
+                                    <br>
+                                    <div class="flexel"><label for="pickup">Самовиіз</label>
+                                    <input type="radio" name="getting" id="pickup" value="pickup" checked></div>
+                                    <div class="flexel"><label for="delivery">Кур'єр</label>
+                                    <input type="radio" name="getting" id="delivery" value="delivery"></div>
+                                    <div class="flexel"><label for="newp">Нова пошта</label>
+                                    <input type="radio" name="getting" id="newp" value="newp"></div>
+                                </div>
+                                <hr>
+                                <div class="newuserinfo">
+                                    <div>
+                                        Телефон <input type="text" name="phone" value="<?=$_SESSION['phone'];?>"><br>
+                                    </div>
+                                    <div>
+                                        <section class="addressinput"></section>
+                                    </div>
+                                    <center><div><button>Продовжити</button></div></center>
+                                </div>
+                            </form>
+                        </div>
 						
 						<div class="col-xs-12 col-sm-4 col-md-3">
 							<div class="random-ware">
@@ -388,20 +324,18 @@ foreach ($basket as $b) {
 	    		$svg_anm.fadeOut();
 	    		$preloader.delay(500).fadeOut('slow');
 			});
-		</script>
-		<script>
-			$(".newuserinfo div span").on("click", function(){
-				$(this).remove();
-				$('[name="password"]').css("display", "block");
-			});
-		</script>
-		<script>
-			$(".gotobasket").on("click", function(){
-				var scroll = $('.search-result').offset().top;
-				$("html, body").animate({
-					scrollTop: scroll-15
-				}, 1000);
-			});
-		</script>
+        </script>
+        <script>
+            $("input[name=getting]").on("click", function(){
+                var getting = $("input[name=getting]:checked").val()
+                if (getting == "pickup") {
+                    $(".addressinput").html("");
+                } else if (getting == "delivery") {
+                    $(".addressinput").html('Адреса <input type="text" name="purchaseoption">');
+                } else if (getting == "newp") {
+                    $(".addressinput").html('№ Відділення  <input type="text" name="purchaseoption">');
+                }
+            })
+        </script>
 	</body>
 </html>

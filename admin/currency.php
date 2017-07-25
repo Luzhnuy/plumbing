@@ -31,6 +31,7 @@ $eur_rate = R::getCell("SELECT eur FROM currency");
 		</div>
 		<div class="admin-nav">
 		    <ul class="hidden-sm hidden-xs">
+		    	<a href="orders.php"><li>Замовлення</li></a>
 		    	<a href="list/history.php"><li>Історія</li></a>
 		        <a href="list/categories.php"><li>Категорії</li></a>
 		        <a href="list/goods.php"><li>Товари</li></a>
@@ -43,16 +44,18 @@ $eur_rate = R::getCell("SELECT eur FROM currency");
 		<div class="admin-main">
 			<div class="admin-main-content">
 				<form action="../../apps/currency.php" method="POST" enctype="multipart/form-data">
+				<div class="row">
 					<div class="admin-main-new-goods-top">
-						<div class="admin-main-new-goods-top-name">
+						<div class="admin-main-new-goods-top-name col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align: center;">
                             <div class="currency-label">Долар США</div>
 							<input type="number" step="0.01" name="usd" value="<?=$usd_rate;?>" class="currency-input" style="text-align: center">
 						</div>
-						<div class="admin-main-new-goods-top-name admin-main-new-top-right">
+						<div class="admin-main-new-goods-top-name col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align: center;">
                             <div class="currency-label">Євро</div>
 							<input type="number" step="0.01" name="eur" value="<?=$eur_rate;?>" class="currency-input" style="text-align: center">
 						</div>
 					</div>
+				</div>
 					<div class="admin-main-new-goods-submit">
 						<button>Зберегти</button>
 					</div>

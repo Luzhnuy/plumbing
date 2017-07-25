@@ -32,3 +32,9 @@ $(".admin-hidden-user-main input").on("input", function(){
 		$(".admin-hidden-user-main-button").attr("disabled", "true").css("cursor", "default").css("opacity", "0.3");
 	}
 });
+
+$(".admin-modal-user-close").on("click", function(){
+	userid = 0;
+	user = 0;
+	$(".admin-hidden-wrapper").css("display", "none");
+});

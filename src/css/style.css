@@ -712,6 +712,39 @@ font-family: Russia-Light, sans-serif;
 	font-family: Russia-Medium, sans-serif;
 }
 
+.makeorder {
+	margin-bottom: 40px;
+	border-radius: 3px;
+	border: none;
+	background-color: #464646;
+	color: #fff;
+	padding: 5px;
+	text-align: center;
+	cursor: pointer;
+	display: inline-block;
+	width: 200px;
+	font-family: "Ubuntu";
+	font-size: 15px;
+}
+
+.makeorder a {
+	color: white;
+	text-decoration: none;
+}
+
+.flexmain {
+	display: flex;
+	text-align: center;
+}
+
+.flexel {
+	flex: 1;
+}
+
+.flexmain label, .flexmain input {
+	cursor: pointer;
+}
+
  /* -------------------- */
 
 
