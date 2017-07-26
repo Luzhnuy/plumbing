@@ -1,12 +1,12 @@
 <?php if ($_GET): ?>
-<?php 
-include('configs/config.php');
-
-$usd_rate = R::getCell("SELECT usd FROM currency");
-$eur_rate = R::getCell("SELECT eur FROM currency");
+<?php include('configs/config.php');
 $categories = R::getAll("SELECT category FROM categories ORDER BY category ASC");
 
 $search = $_GET['search'];
+$usd = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"));
+$eur = json_decode(file_get_contents("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"));
+$usd_rate = intval($usd[0]->rate);
+$eur_rate = intval($eur[0]->rate);
 $lastgoods = R::getAll("SELECT * FROM goods ORDER BY id DESC LIMIT 2");
 $goodsf = R::getAll("SELECT * FROM goods");
 $random = rand(0, count($goodsf)-1);
@@ -22,28 +22,16 @@ $goods = R::getAll('SELECT * FROM goods WHERE name LIKE "%'.$search.'%"');
 $random_image = unserialize($random_goods['images']); 
 $random_image = $random_image[0]; 
 
-$discount = strval($_SESSION['discount']);
-if (strlen($discount) == 1) {
-	$discount = "0.0".$discount;
-} elseif (strlen($discount) == 2) {
-	$discount = "0.".$discount;
-}
-$discount = floatval($discount);
 foreach ($basket as $b) {
 	if ($_SESSION['id'] == $b['client']) {
 		$countg = $countg + 1;
 		if (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 0) {
-			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
-			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + round($gcost, 2);
+			$summ = $summ + R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $usd_rate;
 		} elseif (R::getCell("SELECT currency FROM goods WHERE id = ?", [ $b['goods'] ]) == 1) {
-			$gcost = R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
-			$gcost = $gcost - ( $gcost * $discount );
-			$summ = $summ + round($gcost, 2);
+			$summ = $summ + R::getCell("SELECT cost FROM goods WHERE id = ?", [ $b['goods'] ]) * $eur_rate;
 		}
 	}
-}
-?>
+}?>
 
 <!DOCTYPE html> 
 <html>
@@ -93,7 +81,7 @@ foreach ($basket as $b) {
 	      </div>
 	      <!-- Футер модального окна -->
 	      <div class="modal-footer">
-	        <span class="btn btn-default btn-signin-user btn-sb-save">Увійти</span> <!--style="background-color: #464646;color:#fff;"-->
+	        <button type="submit" class="btn btn-default btn-signin-user btn-sb-save">Увійти</button> <!--style="background-color: #464646;color:#fff;"-->
 	      </div>
 	      </form>
 	    </div>
@@ -113,7 +101,7 @@ foreach ($basket as $b) {
 						<label for="text-input-fname" class="col-form-label">Ім'я</label>
 						<input class="form-control" type="text id="text-input-fname" name="name">
 
-						<label for="text-input-lname" class="col-form-label">Прізвище</label>
+						<label for="text-input-lname" class="col-form-label">Фамілія</label>
 						<input class="form-control" type="text" id="text-input-lname" name="lastname">
 
 						<label for="email-input" class="col-form-label">E-mail</label>
@@ -236,8 +224,8 @@ foreach ($basket as $b) {
 							 	<? if($_SESSION) {
 							echo '<a href="admin/index.php"><button class="btn btn-default dropdown-toggle btn-my-room" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/user.png"></span>Мій кабінет</button></a>';
 						} else {
-							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signin" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/user.png"></span>Вхід</button> ';
-							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signup" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/user.png"></span>Реєстрація</button>';
+							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signin" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/signin.png"></span>Вхід</button> ';
+							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signup" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/signup.png"></span>Реєстрація</button>';
 						}
 						?>	
 						</div>
@@ -259,7 +247,7 @@ foreach ($basket as $b) {
 						          		<a href="src/template/goods.php?goods=<?=$g['id']; ?>"><h3><?=$g['name'];?></h3></a>
 						         	</div>
 						        	<div class="col-sm-4 col-sm-offset-2">
-						          		<h3 class="h3-right"><?  if ($g['currency'] == 0){ echo round($usd_rate*$g['cost'], 2);}elseif($g['currency'] == 1){echo round($eur_rate*$g['cost'], 2); } else{ echo round($g['cost'], 2);} ?> Грн<img src="src/img/tags.png"></h3 class="h3-right">
+						          		<h3 class="h3-right"><?  if ($g['currency'] == 0){ echo $usd_rate*$g['cost'];}elseif($g['currency'] == 1){echo $eur_rate*$g['cost']; } else{ echo $g['cost'];} ?> Грн<img src="src/img/tags.png"></h3 class="h3-right">
 						         	</div>
 						        </div>
 						        <div class="row">
@@ -278,12 +266,8 @@ foreach ($basket as $b) {
 						            			</div>
 						           			</div>
 						           			<div class="col-sm-7 col-sm-offset-5">
-											   	<?php if($g['is'] == 1): ?>
-												<div class="btn-add-center" data-id="<?=$g['id'];?>"><span class="btn btn-default btn-add-basket"><img src="src/img/cart.png">Додати в кошик</span></div>
-												<?php elseif($g['is'] == 0): ?>
-												<div class="btn-add-center-isnt"><span class="btn btn-default">Товар тимчасово відсутній</span></div>
-												<?php endif; ?>
-											</div>
+						            			<span class="btn btn-default btn-add-basket btn-add-center" data-id="<?=$g['id'];?>"><img src="src/img/cart.png">Додати в кошик</span>
+						           			</div>
 						          		</div>
 						         	</div>
 						        </div>
@@ -301,7 +285,7 @@ foreach ($basket as $b) {
 								<h3>Випадковий товар</h3>
 								<h5><?=$random_goods['name'];?></h5>
 								<div class="random-ware-img"><img src="<?=$random_image;?>" alt=""></div>
-								<h3 class="h3-center"><? if ($random_goods['currency'] == 0){ echo round($usd_rate*$random_goods['cost'], 2);}elseif($random_goods['currency'] == 1){echo round($eur_rate*$random_goods['cost'], 2); } else{ echo round($random_goods['cost'], 2);} ?> Грн.<img src="src/img/tags.png"></h3>
+								<h3 class="h3-center"><? if ($random_goods['currency'] == 0){ echo $usd_rate*$random_goods['cost'];}elseif($random_goods['currency'] == 1){echo $eur_rate*$random_goods['cost']; } else{ echo $random_goods['cost'];} ?> Грн.<img src="src/img/tags.png"></h3>
 								<h6><a href="src/template/goods.php?goods=<?=$random_goods['id'];?>">Детальніше...</a></h6>
 							</div>
 							<div class="random-ware">
@@ -447,7 +431,6 @@ foreach ($basket as $b) {
 		<script src="src/js/back_connect.js"></script>
 		<script src="src/js/settings_toggle.js"></script>
 		<script src="src/js/purchase.js"></script>
-		<script src="src/js/signin.js"></script>
 		<script>
 			    //modal
     		$('.btn-signin').on('click', function(){

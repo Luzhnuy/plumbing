@@ -258,8 +258,8 @@ $catalog = R::getCell("SELECT category FROM categories WHERE id = ?", [ $categor
 							 	<? if($_SESSION) {
 							echo '<a href="admin/index.php"><button class="btn btn-default dropdown-toggle btn-my-room" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/user.png"></span>Мій кабінет</button></a>';
 						} else {
-							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signin" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/user.png"></span>Вхід</button> ';
-							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signup" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/user.png"></span>Реєстрація</button>';
+							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signin" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/signin.png"></span>Вхід</button> ';
+							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signup" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="src/img/signup.png"></span>Реєстрація</button>';
 						}
 						?>	
 						</div>
