@@ -89,7 +89,7 @@ foreach ($basket as $b) {
 		<header>
 			<div class="container">
 				<div class="row">
-					<div class="col-xs-6 col-sm-6 col-md-6 padinishka">
+					<div class="col-xs-6 col-sm-6 col-md-6  padinishka">
 						<!-- Brand and toggle get grouped for better mobile display -->
 						<div class="navbar-header">
 							<a class="navbar-brand" href="/"><img src="../src/img/big-logo.png" alt=""></a>
