@@ -54,7 +54,7 @@
 						</div>
 					</div>
 					<div class="admin-main-new-goods-submit">
-						<button>Додати</button>
+						<button>Зберегти</button>
 					</div>
 				</form>
 			</div>

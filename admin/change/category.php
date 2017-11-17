@@ -3,6 +3,7 @@
 <?php if ($_SESSION['type'] == 'superadmin'): 
 $categoryid = $_GET['category'];
 $category = R::load("categories", $categoryid);
+$features = R::getAll("SELECT * FROM `features` WHERE category = ?", [$categoryid]);
 ?>
 
 	
@@ -42,22 +43,46 @@ $category = R::load("categories", $categoryid);
 		<div class="admin-main">
 			<div class="admin-main-content">
 				<form action="../../apps/change_category.php" method="POST" enctype="multipart/form-data">
-					<input type="number" hidden name="featurescount">
-					<input type="text" hidden name="optionscount">
 					<div class="admin-main-new-goods-top">
 						<div class="admin-main-new-goods-top-name">
 							<div class="category_featurer">Характеристика</div>
 							<div class="featuremain">
-
+								<? $count = 0;
+								$optionsCount = "";
+								foreach($features as $feature):
+								$count = $count + 1?>
+								<span class="featuremain<?=$count?> featuremainspan">
+        							<input type="text" name="feature<?=$count?>" class="featureinput" value=<?=$feature['feature']?>><span class="featureactions featureactions<?=$count?>"><i class="fa fa-plus-circle newfeatureoption newfeatureoption<?=$count?>" data-feature="<?=$count?>" aria-hidden="true"></i><i class="fa fa-trash-o featureremoveoption featureremoveoption<?=$count;?>" data-feature="<?=$count;?>" aria-hidden="true"></i></span>
+									<div class="featureoptionmain featureoptionmain<?=$count?>">
+										<?php $options = R::getAll("SELECT * FROM `featureoptions` WHERE category = ? AND feature = ?", [$categoryid, $feature['id']]);
+										$_count = 0;
+										foreach($options as $option):
+										$_count = $_count + 1?>
+										<span class="optionmain optionmain<?=$_count;?>">
+										<input class="featureinput featureinputoption" name="feature<?=$count;?>option<?=$_count;?>" value=<?=$option['option'];?>>
+										</span>
+										<?php endforeach;
+										$optionsCount.=$_count.=",";
+										?>
+										<input id="_feature<?=$count;?>OptionsCount" value=<?=$_count;?> hidden>
+									</div>
+								</span>
+								<?endforeach;?>
+								<input type="number" hidden name="featurescount" value="<?=$count;?>">
+								<input type="text" hidden name="optionscount" value="<?=substr($optionsCount, 0, -1);?>">
+								<input type="text" hidden name="categoryId" value="<?=$categoryid;?>">
+								<input id="_featureCount" value="<?=$count;?>" hidden>
 							</div>
-							<span class="featureplus"><i class="fa fa-plus-circle" aria-hidden="true" id="newfeature"></i></span>
-						</div>
+							<span class="featureplus"><i class="fa fa-plus-circle" aria-hidden="true" id="newfeature"></i>
+							
+							</span>
+							</div>
 						<div class="admin-main-new-goods-top-name admin-main-new-top-right">
 							<input type="text" placeholder="Назва категорії" name="name" value="<?=$category['category'];?>">
 						</div>
 					</div>
 					<div class="admin-main-new-goods-submit">
-						<button>Додати</button>
+						<button>Зберегти</button>
 					</div>
 				</form>
 			</div>
@@ -66,7 +91,7 @@ $category = R::load("categories", $categoryid);
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="../../src/js/admin.js"></script>
 	<script src="../../src/js/checker.js"></script>
-	<script src="../../src/js/features.js"></script>
+	<script src="../../src/js/idontknowwhatimdoinghere.js"></script>
 	</body>
 </html>	
 

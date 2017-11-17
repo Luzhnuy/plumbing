@@ -92,10 +92,6 @@
                 $summ = 0;
             }
         }
-?>
-<?php if ($method == "cash"): ?>
-<?php
-
 
 require_once("libs/mailer/PHPMailerAutoload.php");
 $mail = new PHPMailer;
@@ -113,13 +109,30 @@ $mail->setFrom('info@potik-shop.com', 'Info');
 $mail->addAddress('vladyslav.kurash@gmail.com');
 $mail->IsHTML(true);
 
-$mail->Subject = "Замовлення №".$orderid." [Готівка]";
+$mail->Subject = "Замовлення №".$orderid."";
 
-$mail->Body = '
-            <center><h3>Надійшло нове замовлення</h3>
-            <a href="http://plumbing/admin/orders.php?order='.$orderid.'">Перевірити</a></center>
+$list = '
+			<center><h2>Надійшло нове замовлення</h2></center>
+			№'.$order->id.'<br><br>
+			Замовник: '.$_SESSION['firstname']." ".$_SESSION['lastname'].'<br>
+			Номер телефона: '.$_POST['phone'].'<br>
+			E-mail: '.$_SESSION['email'].'<br>
+			Спосіб оплати: '.$order->dmethod.'<br>
+			Спосіб отримання: '.$order->method.'<br>
+			Список замовлення: <br>';
+
+			$q = 1;
+			foreach(unserialize($order->basket) as $b):
+				$text = ''.$q.') '.$b['name'] .' | '. $b['cost'].' Грн.<br>';
+				$q += 1; 
+				$list.=$text;
+			endforeach;
+			
+			$list.='Загальна сума замовлення: '.$order['sum'] .' Грн.<br><br>
+			
+            <a href="http://plumbing/admin/orders.php?order='.$orderid.'">Перевірити замовлення на сайті</a>
             ';
-
+$mail->Body = $list;
 $mail->send();
 
 $categories = R::getAll("SELECT * FROM categories ORDER BY category ASC");
@@ -284,6 +297,7 @@ $random_image = $random_image[0];
 					<div class="row">
 						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
                             <center><h3>Замовлення надійшло до опрацювання</h3></center>
+							<?=$list;?>
 						</div>
 						<div class="col-xs-12 col-sm-4 col-md-3">
 							<div class="random-ware">
@@ -391,6 +405,3 @@ $random_image = $random_image[0];
 		</script>
 	</body>
 </html>
-<?php elseif ($method == "ncash"): ?>
-
-<?php endif; ?>  
