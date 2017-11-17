@@ -235,8 +235,8 @@ $random_image = $random_image[0];
 								<? if($_SESSION) {
 							echo '<a href="../../admin/index.php"><button class="btn btn-default  dropdown-toggle btn-my-room" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="../img/user.png"></span>Мій кабінет</button></a>';
 						} else {
-							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signin" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="../img/user.png"></span>Вхід</button> ';
-							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signup" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="..//img/user.png"></span>Реєстрація</button>';
+							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signin" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="../img/signin.png"></span>Вхід</button> ';
+							echo '<button class="btn btn-default dropdown-toggle btn-my-room btn-signup" type="button" id="btn-my-room" aria-haspopup="true" aria-expanded="true"><span><img src="../img/signup.png"></span>Реєстрація</button>';
 						}
 						?>	
 						</div>
@@ -246,24 +246,40 @@ $random_image = $random_image[0];
 			<div class="section-body">
 				<div class="container">
 					<div class="row">
-						<div class="com-xs-12 col-sm-8 col-md-6 col-md-offset-3">
+						<div class="com-xs-12 col-md-12"> <!-- col-sm-8 col-md-6 col-md-offset-3-->
 							<h2>Про нас</h2>
 							<div class="sb-ware">
-								<span class="sb-span"><!-- <span><img src="../img/star.png"></span> -->Чому саме ми?</span>
+								<!-- <span class="sb-span"><span><img src="../img/star.png"></span>Чому саме ми?</span> -->
 								<div class="row">
 									<div class="col-xs-12 col-sm-12 col-md-12 border-right">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam labore officiis neque nulla! Quia dolorum saepe accusantium, libero soluta pariatur magnam vero maiores id ipsum? Fugiat obcaecati, praesentium rerum autem?</p>
+										<p>Схоже Вам не все одно ДЕ і в КОГО купувати, і ми дуже цьому радіємо. Адже у нас буде змога познайомитись із Вами ближче.
+										</p>
+
+										<p>В наш час вже нікого не здивуєш кількістю товарів, цінами, гарантією та доставкою. Це обов'язково має бути не гірше, ніж у конкурентів. Але є один важливий момент, який створює багато проблем. Це сервіс. 
+										</p>
+
+										<p>Як Ви розумієте гарний та якісний сервіс? Чому в інтернеті так багато відгуків незадоволених клієнтів? В нашому розумінні гарний сервіс, це: <br>
+											- коли тебе уважно слухають, розуміють твої потреби;<br>
+											- щира порада, як зробити краще, як не витратити зайві кошти;<br>
+											- повага, довіра та бажання допомогти, коли щось пішло не так.
+										</p>
+
+										<p>Ці прості речі ми всі щодня робимо для наших близьких, для друзів... Так само ми працюємо з нашими клієнтами. І головне - виконуємо те, що обіцяємо та беремо відповідальність за свої зобов'язання. Саме такий сервіс нас надихає. Саме такий сервіс подобається нашим клієнтам.</p>
+
+										<p>Головне завдання кожного в компанії: Розуміти, чого ви бажаєте та працювати над тим, щоб ви жодного разу не пошкодували, що обрали саме нас. Ми відкриті до спілкування і дуже цінуємо, коли наші клієнти дають нам поради, як зробити сервіс ще кращим.</p>
+
+										<p><span style="font-weight: bold; font-style: italic;">Давайте знайомитись!</span></p>
 									</div>
 								</div>
 							</div>
-							<div class="sb-ware">
-								<span class="sb-span"><!-- <span><img src="../img/star.png"></span> -->Що ми пропонуємо?</span>
+							<!-- <div class="sb-ware">
+								<span class="sb-span"> --><!-- <span><img src="../img/star.png"></span> --><!-- Що ми пропонуємо?</span>
 								<div class="row">
 									<div class="col-xs-12 col-sm-12 col-md-12 border-right">
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, tempore? Omnis esse temporibus iusto tempore quas ipsa placeat. Aut ullam, quisquam recusandae voluptates perspiciatis blanditiis nesciunt quasi veritatis corrupti, aliquid.</p>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<!-- <div class="col-xs-12 col-sm-4 col-md-3">
 							<div class="random-ware">

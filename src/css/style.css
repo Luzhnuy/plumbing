@@ -89,6 +89,7 @@ h4 {
 
 .h4-span{
 	float: left;
+	line-height: 30px;
 }
 
 .h4-span:last-child{
@@ -429,6 +430,7 @@ span.logo-test{
 	background-color: #dededf;
 	display: inline-block;
 	vertical-align: middle;
+	line-height: 30px;
 }
 .carousel-control.left, .carousel-control.right{
 	background-image: none;
@@ -847,7 +849,7 @@ height: 400px;
 position: absolute;
 left: 50%;
 top: 50%;
-margin-left: -400px;
+margin-left: -380px;
 margin-top: -200px;
 color:#fff;
 /*font-size:40px;*/
